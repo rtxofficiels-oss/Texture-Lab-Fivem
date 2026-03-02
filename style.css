@@ -21,14 +21,14 @@ body {
     line-height: 1.6;
 }
 
-/* Barre de Navigation Sécurisée */
+/* --- NAVIGATION & DROPDOWN --- */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 8%;
     background: rgba(0, 0, 0, 0.95);
-    border-bottom: 1px solid #333;
+    border-bottom: 2px solid var(--primary); /* Ligne rouge plus visible */
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -36,6 +36,8 @@ nav {
 }
 
 .logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); letter-spacing: 1px; }
+
+.menu { display: flex; align-items: center; }
 
 nav a { 
     color: var(--text); 
@@ -49,10 +51,34 @@ nav a {
 
 nav a:hover { color: var(--primary); }
 
-/* Conteneur */
+/* Le menu déroulant */
+.dropdown { position: relative; display: inline-block; }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #111;
+    min-width: 200px;
+    box-shadow: var(--shadow);
+    z-index: 1;
+    border: 1px solid var(--primary);
+    top: 100%;
+}
+
+.dropdown-content a {
+    display: block;
+    margin: 0;
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    border-bottom: 1px solid #222;
+    text-align: left;
+}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+/* --- CONTENU --- */
 .container { max-width: 1100px; margin: auto; padding: 50px 20px; }
 
-/* Grille de Services */
 .grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -60,7 +86,6 @@ nav a:hover { color: var(--primary); }
     margin-top: 30px;
 }
 
-/* Cartes de Produits */
 .card {
     background: var(--card);
     border-radius: 12px;
@@ -68,6 +93,7 @@ nav a:hover { color: var(--primary); }
     border: 1px solid #222;
     transition: transform 0.3s, border-color 0.3s;
     box-shadow: var(--shadow);
+    position: relative;
 }
 
 .card:hover { 
@@ -75,10 +101,29 @@ nav a:hover { color: var(--primary); }
     border-color: var(--primary); 
 }
 
-.card h3 { margin-top: 0; color: var(--primary); }
+.card h3 { margin-top: 10px; color: var(--primary); }
 .card p { color: var(--text-muted); font-size: 0.95rem; }
 
-/* Bouton Contact / Commande */
+/* Badges de prix et catégories */
+.price-tag { 
+    color: var(--primary); 
+    font-weight: 700; 
+    font-size: 1.2rem; 
+    display: block; 
+    margin: 15px 0; 
+}
+
+.category-badge {
+    background: #333;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* --- BOUTONS --- */
 .btn {
     display: inline-block;
     background: var(--primary);
@@ -91,9 +136,21 @@ nav a:hover { color: var(--primary); }
     transition: 0.3s;
     border: none;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
 }
 
-.btn:hover { background: var(--primary-hover); box-shadow: 0 0 15px rgba(207, 10, 10, 0.4); }
+.btn:hover { 
+    background: var(--primary-hover); 
+    box-shadow: 0 0 15px rgba(207, 10, 10, 0.4); 
+}
 
-/* Footer */
-footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #222; }
+/* --- FOOTER --- */
+footer { 
+    text-align: center; 
+    padding: 40px; 
+    color: var(--text-muted); 
+    font-size: 0.8rem; 
+    border-top: 1px solid #222; 
+    margin-top: 50px;
+}
