@@ -4,21 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Division Militaire | Texture Lab Fivem</title>
+    <title>Division Militaire | Texture Studio</title>
 </head>
 <body>
     <nav>
-        <div class="logo">TEXTURE LAB FIVEM</div>
+        <div class="logo">TEXTURE STUDIO</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
-            <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
-                <div class="dropdown-content">
-                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
-                    <a href="secours.html">Services de Secours</a>
-                    <a href="civil.html">Civil & RP Basique</a>
-                </div>
-            </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
             <a href="contact.html">Contact</a>
@@ -26,39 +18,28 @@
     </nav>
 
     <div class="container">
-        <div class="category-badge">Opérations Spéciales</div>
         <h1>Division Militaire</h1>
-        <p style="text-align: center; color: var(--text-muted);">Nettoyage massif et mise en conformité Lore-Friendly pour vos unités.</p>
-        
         <div class="grid">
             <div class="card">
                 <span class="category-badge">Pack Complet</span>
                 <h3>Démilitarisation Totale</h3>
-                <p>Retrait des drapeaux nationaux et marques réelles sur packs EUP massifs (+420 textures). Idéal pour serveurs RP stricts.</p>
+                <p>Retrait des drapeaux et marques réelles sur packs EUP massifs (+420 textures).</p>
                 <span class="price-tag">Sur Devis</span>
-                <a href="contact.html" class="btn">Demander un Devis</a>
+                <button onclick="ajouterAuPanier('Pack Démilitarisation', 0)" class="btn">Ajouter au panier</button>
             </div>
-
             <div class="card">
                 <span class="category-badge">Accessoires</span>
                 <h3>Casques & Bérets</h3>
-                <p>Ajout de grades, insignes d'unité HD et retrait de marques fabricants (Ops-Core, Team Wendy, etc.).</p>
+                <p>Ajout de grades, insignes d'unité et retrait de marques fabricants.</p>
                 <span class="price-tag">5.00€ / unité</span>
-                <a href="contact.html" class="btn">Commander</a>
-            </div>
-
-            <div class="card">
-                <span class="category-badge">Textures</span>
-                <h3>Camouflages Custom</h3>
-                <p>Application de motifs spécifiques (Multicam, Black, Aride) sur des modèles existants.</p>
-                <span class="price-tag">8.00€ / tenue</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Casque/Béret Militaire', 5)" class="btn">Ajouter au panier</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Texture Lab Fivem - Tous droits réservés</p>
-    </footer>
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
