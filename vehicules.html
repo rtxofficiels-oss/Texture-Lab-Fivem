@@ -4,61 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Textures Véhicules | Texture Lab Fivem</title>
+    <title>Textures Véhicules | Texture Studio</title>
 </head>
 <body>
     <nav>
-        <div class="logo">TEXTURE LAB FIVEM</div>
-        <div class="menu">
-            <a href="index.html">Accueil</a>
-            <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
-                <div class="dropdown-content">
-                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
-                    <a href="secours.html">Services de Secours</a>
-                    <a href="civil.html">Civil & RP Basique</a>
-                </div>
-            </div>
-            <a href="vehicules.html">Véhicules</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="contact.html">Contact</a>
-        </div>
+        <div class="logo">TEXTURE STUDIO</div>
+        <div class="menu"><a href="index.html">Accueil</a><a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a></div>
     </nav>
 
     <div class="container">
-        <div class="category-badge">Automobile WIP</div>
         <h1>Textures Véhicules</h1>
-        <p style="text-align: center; color: var(--text-muted);">Modifications esthétiques via fichiers .ytd. Aucun changement de modèle 3D.</p>
-
         <div class="grid">
             <div class="card">
-                <div class="category-badge">Conformité</div>
-                <h3>Lore-Friendly Véhicule</h3>
-                <p>Retrait des noms de marques réelles sur les carrosseries et vitres (Mercedes, BMW, Audi, Nike, etc.) pour éviter les copyrights.</p>
-                <span class="price-tag">15.00€ / véhicule</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <span class="category-badge">Lore-Friendly</span>
+                <h3>Débadgeage Véhicule</h3>
+                <p>Retrait des marques réelles (Mercedes, BMW, etc.) sur fichiers .ytd.</p>
+                <span class="price-tag">15.00€</span>
+                <button onclick="ajouterAuPanier('Débadgeage Véhicule', 15)" class="btn">Ajouter au panier</button>
             </div>
-
             <div class="card">
-                <div class="category-badge">Design</div>
-                <h3>Livrées Custom</h3>
-                <p>Modification esthétique complète : livrées de Police, logos de Gangs, ou marquages d'entreprises sur vos véhicules existants.</p>
+                <span class="category-badge">Custom</span>
+                <h3>Livrées Personnalisées</h3>
+                <p>Création de livrées Police, EMS ou Entreprises sur mesure.</p>
                 <span class="price-tag">Dès 20.00€</span>
-                <a href="contact.html" class="btn">Commander</a>
-            </div>
-
-            <div class="card">
-                <div class="category-badge">Détails</div>
-                <h3>Plaques & Logos Intérieurs</h3>
-                <p>Retexturage des plaques d'immatriculation personnalisées et modification des logos sur le volant ou les sièges.</p>
-                <span class="price-tag">5.00€ / véhicule</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Livrée Custom', 20)" class="btn">Ajouter au panier</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Texture Lab Fivem - Expertise .YTD</p>
-    </footer>
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
