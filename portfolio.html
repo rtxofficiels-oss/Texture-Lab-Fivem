@@ -2,38 +2,69 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Portfolio | Galerie de Textures</title>
+    <title>Portfolio | Texture Lab Fivem</title>
 </head>
 <body>
     <nav>
-        <div class=Texture_Lab_Fivem</div>
+        <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
-            <a href="nettoyage.html">Nettoyage</a>
-            <a href="custom.html">Custom</a>
+            <div class="dropdown">
+                <a href="#">Vêtements ▾</a>
+                <div class="dropdown-content">
+                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
+                    <a href="secours.html">Services de Secours</a>
+                    <a href="civil.html">Civil & RP Basique</a>
+                </div>
+            </div>
+            <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
 
     <div class="container">
+        <div class="category-badge">Galerie de Travail</div>
         <h1>Mes Réalisations</h1>
+        <p style="text-align: center; color: var(--text-muted);">Aperçu de la qualité de nettoyage et de création pour serveurs RP.</p>
+
         <div class="grid">
             <div class="card">
-                <h3>Retrait de marquages réels</h3>
-                <div style="display: flex; gap: 10px; justify-content: center;">
-                    <div style="text-align: center;"><small>AVANT</small><br><img src="img/avant1.jpg" style="width: 100%; border-radius: 5px;"></div>
-                    <div style="text-align: center;"><small>APRÈS</small><br><img src="img/apres1.jpg" style="width: 100%; border-radius: 5px;"></div>
+                <div class="category-badge">Nettoyage Lore-Friendly</div>
+                <h3>Démilitarisation Pack EUP</h3>
+                <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
+                    <div style="text-align: center;">
+                        <small style="color: var(--primary);">AVANT</small><br>
+                        <img src="img/avant1.jpg" alt="Pack avant nettoyage" style="width: 100%; border-radius: 5px; border: 1px solid #333;">
+                    </div>
+                    <div style="text-align: center;">
+                        <small style="color: #00ff00;">APRÈS</small><br>
+                        <img src="img/apres1.jpg" alt="Pack après nettoyage" style="width: 100%; border-radius: 5px; border: 1px solid var(--primary);">
+                    </div>
                 </div>
-                <p>Nettoyage complet d'un pack EUP 15Go.</p>
+                <p>Retrait complet des logos réels et drapeaux sur un pack EUP massif (15Go). Optimisation des textures .ytd incluse.</p>
             </div>
+
             <div class="card">
-                <h3>Logo Serveur Custom</h3>
-                <img src="img/custom1.jpg" style="width: 100%; border-radius: 5px; margin-top: 10px;">
-                <p>Intégration de logo HD sur vestes tactiques.</p>
+                <div class="category-badge">Création Custom</div>
+                <h3>Intégration Logo Serveur</h3>
+                <img src="img/custom1.jpg" alt="Veste custom" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
+                <p>Création de logos HD et intégration précise sur vestes tactiques et polos de service.</p>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Véhicules</div>
+                <h3>Nettoyage Marquage Véhicule</h3>
+                <img src="img/vehicule1.jpg" alt="Véhicule Lore-friendly" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
+                <p>Retrait des insignes de marques automobiles réelles pour conformité Lore-Friendly.</p>
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2026 Texture Lab Fivem - Expertise Texture WIP</p>
+    </footer>
 </body>
 </html>
