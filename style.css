@@ -154,3 +154,51 @@ footer {
     border-top: 1px solid #222; 
     margin-top: 50px;
 }
+
+/* =========================================
+   AJOUTS : PANIER & ADMIN (Firebase)
+   ========================================= */
+
+/* Badge Panier Flottant */
+.cart-floater {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(207, 10, 10, 0.3);
+    cursor: pointer;
+    z-index: 2000;
+    display: none; /* Apparaît via JS */
+    font-weight: 700;
+    transition: 0.3s transform;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.cart-floater:hover {
+    transform: scale(1.05);
+    background: var(--primary-hover);
+}
+
+/* Styles pour la liste de Logs Admin */
+#visites {
+    list-style: none;
+    padding: 0;
+}
+
+#visites li {
+    background: #222;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    border-left: 3px solid var(--primary);
+}
+
+#visites li small {
+    display: block;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
