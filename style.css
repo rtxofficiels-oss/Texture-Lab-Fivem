@@ -28,7 +28,7 @@ nav {
     align-items: center;
     padding: 15px 8%;
     background: rgba(0, 0, 0, 0.95);
-    border-bottom: 2px solid var(--primary); /* Ligne rouge plus visible */
+    border-bottom: 2px solid var(--primary);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -36,7 +36,6 @@ nav {
 }
 
 .logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); letter-spacing: 1px; }
-
 .menu { display: flex; align-items: center; }
 
 nav a { 
@@ -51,9 +50,7 @@ nav a {
 
 nav a:hover { color: var(--primary); }
 
-/* Le menu déroulant */
 .dropdown { position: relative; display: inline-block; }
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -78,7 +75,6 @@ nav a:hover { color: var(--primary); }
 
 /* --- CONTENU --- */
 .container { max-width: 1100px; margin: auto; padding: 50px 20px; }
-
 .grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -96,23 +92,11 @@ nav a:hover { color: var(--primary); }
     position: relative;
 }
 
-.card:hover { 
-    transform: translateY(-8px); 
-    border-color: var(--primary); 
-}
-
-.card h3 { margin-top: 10px; color: var(--primary); }
+.card:hover { transform: translateY(-8px); border-color: var(--primary); }
+.card h3, .card h2 { margin-top: 10px; color: var(--primary); }
 .card p { color: var(--text-muted); font-size: 0.95rem; }
 
-/* Badges de prix et catégories */
-.price-tag { 
-    color: var(--primary); 
-    font-weight: 700; 
-    font-size: 1.2rem; 
-    display: block; 
-    margin: 15px 0; 
-}
-
+.price-tag { color: var(--primary); font-weight: 700; font-size: 1.2rem; display: block; margin: 15px 0; }
 .category-badge {
     background: #333;
     color: #fff;
@@ -140,26 +124,9 @@ nav a:hover { color: var(--primary); }
     text-align: center;
 }
 
-.btn:hover { 
-    background: var(--primary-hover); 
-    box-shadow: 0 0 15px rgba(207, 10, 10, 0.4); 
-}
+.btn:hover { background: var(--primary-hover); box-shadow: 0 0 15px rgba(207, 10, 10, 0.4); }
 
-/* --- FOOTER --- */
-footer { 
-    text-align: center; 
-    padding: 40px; 
-    color: var(--text-muted); 
-    font-size: 0.8rem; 
-    border-top: 1px solid #222; 
-    margin-top: 50px;
-}
-
-/* =========================================
-   AJOUTS : PANIER & ADMIN (Firebase)
-   ========================================= */
-
-/* Badge Panier Flottant */
+/* --- PANIER FLOTTANT --- */
 .cart-floater {
     position: fixed;
     bottom: 30px;
@@ -171,34 +138,9 @@ footer {
     box-shadow: 0 10px 20px rgba(207, 10, 10, 0.3);
     cursor: pointer;
     z-index: 2000;
-    display: none; /* Apparaît via JS */
+    display: none;
     font-weight: 700;
-    transition: 0.3s transform;
     border: 2px solid rgba(255,255,255,0.1);
 }
 
-.cart-floater:hover {
-    transform: scale(1.05);
-    background: var(--primary-hover);
-}
-
-/* Styles pour la liste de Logs Admin */
-#visites {
-    list-style: none;
-    padding: 0;
-}
-
-#visites li {
-    background: #222;
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    border-left: 3px solid var(--primary);
-}
-
-#visites li small {
-    display: block;
-    color: var(--text-muted);
-    margin-top: 5px;
-}
+footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #222; margin-top: 50px; }
