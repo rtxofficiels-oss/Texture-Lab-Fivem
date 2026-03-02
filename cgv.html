@@ -8,6 +8,11 @@
 </head>
 <body>
     <nav>
+        <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+    <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+    <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+</div>
         <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
