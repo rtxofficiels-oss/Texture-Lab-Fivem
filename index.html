@@ -37,26 +37,94 @@
             <div class="category-badge">Optimisation</div>
             <h2>Nettoyage Lore-Friendly</h2>
             <p>Mise en conformité de vos packs EUP massifs. Retrait de logos et drapeaux réels (15Go+ supportés).</p>
-            <a href="militaire.html" class="btn">Voir les détails</a>
+            <span class="price-tag">Dès 40.00€</span>
+            <button onclick="ajouterAuPanier('Nettoyage Lore-Friendly', 40)" class="btn">Ajouter au panier</button>
         </div>
 
         <div class="card">
             <div class="category-badge">Création</div>
             <h2>Vêtements Custom</h2>
             <p>Personnalisation de T-shirts, pulls, casques et vestes avec les logos de votre serveur.</p>
-            <a href="custom.html" class="btn">Voir les prix</a>
+            <span class="price-tag">Dès 15.00€</span>
+            <button onclick="ajouterAuPanier('Vêtements Custom', 15)" class="btn">Ajouter au panier</button>
         </div>
 
         <div class="card">
             <div class="category-badge">Véhicules</div>
             <h2>Retexturage Véhicules</h2>
             <p>Retrait de marques réelles sur carrosserie et création de livrées personnalisées via .ytd.</p>
-            <a href="vehicules.html" class="btn">En savoir plus</a>
+            <span class="price-tag">15.00€ / unité</span>
+            <button onclick="ajouterAuPanier('Retexturage Véhicule', 15)" class="btn">Ajouter au panier</button>
         </div>
+    </div>
+
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">
+        🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
     <footer>
         <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
+        <p><a href="cgv.html" style="color: var(--text-muted); text-decoration: none; font-size: 0.7rem;">Conditions Générales de Vente</a></p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // CONFIGURATION FIREBASE (Tes clés officielles)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOLvy2PhthQZuBvaVPfq0TWquBuyP3gs4",
+            authDomain: "texture-lab-fivem.firebaseapp.com",
+            projectId: "texture-lab-fivem",
+            storageBucket: "texture-lab-fivem.firebasestorage.app",
+            messagingSenderId: "342541770662",
+            appId: "1:342541770662:web:e1c9edd45f217f209d7967",
+            measurementId: "G-RZ7NEYVEGG"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // --- LOG AUTOMATIQUE DES VISITES ---
+        db.collection("visites").add({
+            page: "Accueil",
+            date: new Date(),
+            langue: navigator.language,
+            userAgent: navigator.userAgent
+        });
+
+        // --- LOGIQUE DU PANIER ---
+        let panier = [];
+
+        function ajouterAuPanier(nom, prix) {
+            panier.push({ nom, prix });
+            document.getElementById("cart-count").innerText = panier.length;
+            document.getElementById("cart-btn").style.display = "block";
+            
+            // Log d'intention pour tes stats admin (tu sauras ce qui plaît)
+            db.collection("intentions_achat").add({
+                article: nom,
+                date: new Date()
+            });
+        }
+
+        function validerCommande() {
+            if(panier.length === 0) return;
+
+            let recap = panier.map(i => i.nom).join(", ");
+            let total = panier.reduce((sum, item) => sum + item.prix, 0);
+            
+            // Enregistrement de la commande finale dans Firebase
+            db.collection("commandes_finales").add({
+                articles: recap,
+                total_prix: total,
+                quantite: panier.length,
+                date: new Date()
+            }).then(() => {
+                alert("Sélection enregistrée ! On se retrouve sur Discord pour la suite.");
+                window.location.href = "https://discord.gg/ton-lien-discord"; 
+            });
+        }
+    </script>
 </body>
 </html>
