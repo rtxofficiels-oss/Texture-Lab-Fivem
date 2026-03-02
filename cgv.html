@@ -7,12 +7,13 @@
     <title>CGV | Sécurité & Paiement | Texture Lab Fivem</title>
 </head>
 <body>
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+    </div>
+
     <nav>
-        <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-    <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
-    <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-    <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
-</div>
         <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
@@ -36,19 +37,21 @@
         
         <div class="card" style="text-align: left; line-height: 1.8; border-left: 4px solid var(--primary);">
             <p><strong>1. Processus de Paiement :</strong> Pour toute commande supérieure à 20€, un acompte de 50% est exigé avant le début des travaux. Le solde restant doit être réglé avant la livraison finale des fichiers.</p>
-            
-            <p><strong>2. Propriété Intellectuelle :</strong> Les textures créées ou modifiées restent la propriété exclusive du studio jusqu'au paiement intégral. Toute revente, partage ("leak") ou modification non autorisée est strictement interdite sous peine de bannissement de nos services.</p>
-            
-            <p><strong>3. Livraison & Format :</strong> Les fichiers sont livrés exclusivement au format <strong>.ytd</strong> optimisé. Nous ne fournissons pas de modèles 3D (.yft). La livraison s'effectue via un lien de téléchargement sécurisé après réception du paiement final.</p>
-            
-            <p><strong>4. Droit de Rétractation :</strong> Étant donné la nature numérique et personnalisée des services, aucun remboursement ne sera effectué une fois que le travail de modification a débuté sur vos fichiers.</p>
-            
-            <p><strong>5. Responsabilité :</strong> Le client est responsable de s'assurer qu'il possède les droits d'utilisation sur les packs qu'il nous envoie pour modification. Le studio ne pourra être tenu responsable en cas de problème lié aux droits d'auteur originaux des modèles 3D.</p>
+            <p><strong>2. Propriété Intellectuelle :</strong> Les textures créées ou modifiées restent la propriété exclusive du studio jusqu'au paiement intégral.</p>
+            <p><strong>3. Livraison & Format :</strong> Les fichiers sont livrés exclusivement au format <strong>.ytd</strong> optimisé.</p>
+            <p><strong>4. Droit de Rétractation :</strong> Étant donné la nature numérique, aucun remboursement ne sera effectué après début du travail.</p>
+            <p><strong>5. Responsabilité :</strong> Le client est responsable de posséder les droits sur les packs envoyés.</p>
         </div>
     </div>
+
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
 
     <footer>
         <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
