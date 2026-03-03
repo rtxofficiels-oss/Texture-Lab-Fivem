@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Entreprise | Texture Lab Fivem</title>
+</head>
+<body>
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none;"></span>
+    </div>
+
+    <nav>
+        <div class="logo">TEXTURE LAB FIVEM</div>
+        <div class="menu">
+            <a href="index.html">Accueil</a>
+            <div class="dropdown">
+                <a href="#" class="active">Vêtements ▾</a>
+                <div class="dropdown-content">
+                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
+                    <a href="secours.html">Services de Secours</a>
+                    <a href="civil.html">Civil & RP Basique</a>
+                    <a href="entreprise.html">Entreprise & Pro</a>
+                </div>
+            </div>
+            <a href="vehicules.html">Véhicules</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="category-badge">Business & Corporate</div>
+        <h1>Tenues d'Entreprise</h1>
+        <p style="text-align: center; color: var(--text-muted);">Solutions professionnelles pour vos sociétés RP (Logos personnalisés, tenues de travail).</p>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="category-badge">Service</div>
+                <h3>Pack Restauration</h3>
+                <p>Tabliers, polos et toques pour restaurants, bars et fast-food (Burgershot, Up-n-Atom).</p>
+                <span class="price-tag">Dès 10.00€</span>
+                <button onclick="ajouterAuPanier('Entreprise: Restauration', 10)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Artisanat</div>
+                <h3>Pack Garage / Mécanos</h3>
+                <p>Bleus de travail, combinaisons renforcées et gants pour vos ateliers mécaniques.</p>
+                <span class="price-tag">Dès 15.00€</span>
+                <button onclick="ajouterAuPanier('Entreprise: Garage', 15)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Transport</div>
+                <h3>Pack Logistique / Livreur</h3>
+                <p>Gilets haute visibilité et casquettes pour GoPostal, PostOP ou vos sociétés privées.</p>
+                <span class="price-tag">Dès 12.00€</span>
+                <button onclick="ajouterAuPanier('Entreprise: Livreur', 12)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge" style="background: var(--primary);">Premium</div>
+                <h3>Identité Complète Pro</h3>
+                <p>Création de logo + intégration sur une gamme complète (Haut, Bas, Accessoires).</p>
+                <span class="price-tag">40.00€</span>
+                <button onclick="ajouterAuPanier('Entreprise: Full Pack Custom', 40)" class="btn">Commander le pack</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+
+    <footer>
+        <p>&copy; 2026 Texture Lab Fivem - Section Entreprise</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
+</body>
+</html>
