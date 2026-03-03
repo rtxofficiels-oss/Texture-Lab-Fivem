@@ -7,10 +7,10 @@
     <title>Nettoyage Lore-Friendly | Texture Lab Fivem</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
@@ -23,7 +23,7 @@
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
-                </div>
+                    <a href="entreprise.html">Entreprise & Pro</a> </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
@@ -33,30 +33,34 @@
 
     <div class="container" style="text-align: center;">
         <div class="category-badge">Optimisation & Conformité</div>
-        <h1>Nettoyage de Packs (Démilitarisation)</h1>
-        <p>Traitement manuel de chaque texture pour rendre votre serveur conforme aux règles FiveM (Lore-friendly).</p>
+        <h1>Nettoyage de Packs (Conformité FiveM)</h1>
+        <p style="color: var(--text-muted);">Traitement manuel de chaque texture pour rendre votre serveur conforme aux nouvelles règles de propriété intellectuelle.</p>
         
         <div class="card" style="text-align: left; max-width: 650px; margin: 40px auto; border-left: 4px solid var(--primary);">
-            <h3 style="color: var(--primary);">Pourquoi nettoyer vos packs ?</h3>
-            <p>De nombreux serveurs risquent des sanctions pour l'utilisation de marques réelles. Je traite vos fichiers <strong>.ytd</strong> pour garantir une immersion totale sans risques.</p>
+            <h3 style="color: var(--primary); text-transform: uppercase;">Pourquoi nettoyer vos packs ?</h3>
+            <p>L'utilisation de marques réelles et de drapeaux nationaux peut exposer votre serveur à des sanctions. Je traite vos fichiers <strong>.ytd</strong> pour garantir une immersion totale "Lore-Friendly" sans risques juridiques.</p>
             
-            <ul style="list-style: none; padding-left: 0; margin: 20px 0;">
-                <li style="margin-bottom: 10px;">✅ <strong>Retrait drapeaux :</strong> USA, UK, FR, etc.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Suppression marques :</strong> Nike, Adidas, etc.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Correction camouflage :</strong> Retouches propres.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Optimisation YTD :</strong> Réduction du poids.</li>
+            <ul style="list-style: none; padding-left: 0; margin: 25px 0;">
+                <li style="margin-bottom: 12px;">✅ <strong>Démilitarisation :</strong> Retrait des drapeaux réels (USA, FR, etc.).</li>
+                <li style="margin-bottom: 12px;">✅ <strong>Débadgeage :</strong> Suppression des marques (Nike, Adidas, Glock, etc.).</li>
+                <li style="margin-bottom: 12px;">✅ <strong>Retouches Propres :</strong> Pas de "taches" floues, les textures sont reconstruites.</li>
+                <li style="margin-bottom: 12px;">✅ <strong>Optimisation :</strong> Réduction du poids des fichiers pour limiter les crashs clients.</li>
             </ul>
 
-            <div style="background: #222; padding: 20px; border-radius: 8px; text-align: center;">
-                <p style="margin: 0; font-size: 0.9rem;">Tarif indicatif pour packs massifs (EUP/Props)</p>
-                <span class="price-tag">À partir de 40.00€ / pack</span>
+            <div style="background: #111; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #333;">
+                <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">Tarif indicatif pour packs massifs (EUP / Props)</p>
+                <span class="price-tag" style="margin: 10px 0;">À partir de 40.00€ / pack</span>
             </div>
 
             <button onclick="ajouterAuPanier('Nettoyage Pack Lore-Friendly', 40)" class="btn" style="width: 100%; margin-top: 25px;">AJOUTER AU PANIER POUR DEVIS</button>
         </div>
+        
+        <p style="font-size: 0.8rem; color: var(--text-muted); max-width: 500px; margin: 20px auto;">
+            *Le prix final dépend du nombre de fichiers et du volume de gigaoctets (Go) à traiter.
+        </p>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">
         🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
