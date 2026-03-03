@@ -58,7 +58,7 @@ function afficherProfil() {
 
 // --- SYNCHRONISATION CLOUD ---
 function sauvegarderPanierCloud() {
-    if (currentUser && panier.length > 0) {
+    if (currentUser) {
         db.collection("paniers_actifs").doc(currentUser).set({
             pseudo: currentUser,
             articles: panier,
@@ -73,14 +73,7 @@ function chargerPanierCloud() {
             if (doc.exists) {
                 const data = doc.data();
                 panier = data.articles || [];
-                
-                const cartCount = document.getElementById("cart-count");
-                const cartBtn = document.getElementById("cart-btn");
-                
-                if (cartCount) cartCount.innerText = panier.length;
-                if (cartBtn && panier.length > 0) {
-                    cartBtn.style.display = "block";
-                }
+                actualiserAffichagePanier();
             }
         }).catch((error) => {
             console.log("Erreur lors du chargement du panier:", error);
@@ -88,35 +81,46 @@ function chargerPanierCloud() {
     }
 }
 
-// --- GESTION PANNEAU LATÉRAL (AJOUTÉ) ---
+// --- GESTION PANNEAU LATÉRAL ---
 function toggleCart(productName) {
     const cart = document.getElementById('side-cart');
     const overlay = document.getElementById('overlay');
-    const displayTitle = document.getElementById('product-display-name');
-
-    if (productName && displayTitle) {
-        displayTitle.innerText = productName;
+    
+    if (productName) {
+        document.getElementById('product-display-name').innerText = productName;
     }
 
     cart.classList.toggle('active');
     overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
 }
 
-// --- GESTION PANIER ---
+// --- GESTION PANIER (AJOUT / RETRAIT) ---
+
+function actualiserAffichagePanier() {
+    const cartCount = document.getElementById("cart-count");
+    const cartBtn = document.getElementById("cart-btn");
+    const displayTitle = document.getElementById('product-display-name');
+
+    if (cartCount) cartCount.innerText = panier.length;
+    
+    if (panier.length > 0) {
+        if (cartBtn) cartBtn.style.display = "block";
+        if (displayTitle) displayTitle.innerText = panier[panier.length - 1].nom;
+    } else {
+        if (cartBtn) cartBtn.style.display = "none";
+        if (displayTitle) displayTitle.innerText = "Aucun produit sélectionné";
+    }
+}
+
 function ajouterAuPanier(nom, prix) {
     if (!currentUser) {
-        alert("⚠️ Connecte-toi avec ton pseudo Discord en haut de page pour ajouter des articles !");
+        alert("⚠️ Connecte-toi avec ton pseudo Discord en haut de page !");
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
     }
 
     panier.push({ nom, prix });
-    
-    const cartCount = document.getElementById("cart-count");
-    const cartBtn = document.getElementById("cart-btn");
-    
-    if (cartCount) cartCount.innerText = panier.length;
-    if (cartBtn) cartBtn.style.display = "block";
+    actualiserAffichagePanier();
     
     db.collection("intentions").add({ 
         article: nom, 
@@ -126,14 +130,28 @@ function ajouterAuPanier(nom, prix) {
     });
 
     sauvegarderPanierCloud();
-    
-    // Ouvre le panneau latéral (AJOUTÉ)
     toggleCart(nom);
 }
 
-// --- FINALISATION (MODIFIÉ POUR LE PANNEAU) ---
+// NOUVELLE FONCTION : RETIRER LE DERNIER ARTICLE
+function retirerDuPanier() {
+    if (panier.length > 0) {
+        panier.pop(); // Retire le dernier élément ajouté
+        actualiserAffichagePanier();
+        sauvegarderPanierCloud();
+        
+        if (panier.length === 0) {
+            toggleCart(); // Ferme le panier s'il est vide
+        }
+    }
+}
+
+// --- FINALISATION ---
 function finaliserCommande(type) {
-    if (panier.length === 0) return;
+    if (panier.length === 0) {
+        alert("Votre panier est vide !");
+        return;
+    }
 
     const qty = document.getElementById('qty-input').value;
     const promo = document.getElementById('promo-input').value;
@@ -149,12 +167,11 @@ function finaliserCommande(type) {
         type_clic: type,
         date: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-        // REMPLACE PAR TON LIEN DISCORD
         window.location.href = "https://discord.gg/S4y5s82nWw"; 
     });
 }
 
-// Lancement auto au chargement
+// Lancement auto
 window.addEventListener('DOMContentLoaded', () => {
     afficherProfil();
     chargerPanierCloud();
