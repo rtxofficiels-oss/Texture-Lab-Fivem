@@ -5,22 +5,20 @@
     <title>Panel Admin | Texture Lab</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        h3 { color: var(--neon-purple); border-bottom: 2px solid rgba(157, 0, 255, 0.2); padding-bottom: 10px; }
-        .total-ca-box { padding: 15px; background: rgba(0, 229, 255, 0.05); border-radius: 8px; margin-bottom: 25px; border: 1px solid rgba(0, 229, 255, 0.2); }
-        .total-ca-box strong { color: var(--neon-green); font-size: 1.4rem; }
-        .log-item { background: var(--card); padding: 20px; margin-bottom: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); position: relative; }
-        .delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.05); color: #ff4444; border: none; cursor: pointer; padding: 5px 10px; border-radius: 5px; }
+        /* Quelques styles rapides pour l'admin */
+        .log-item { background: #1a1a1a; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--primary); }
+        h3 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Panel Admin <img src="img/logo.png" style="height:40px; vertical-align:middle;"></h1>
+        <h1>Panel de Configuration Admin</h1>
         
         <div id="commandes-list">
             <p>Chargement des commandes...</p>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid rgba(157, 0, 255, 0.2); margin: 40px 0;">
+        <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
 
         <div id="visites-list">
             <p>Chargement des paniers actifs...</p>
@@ -29,8 +27,9 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    
+
     <script>
+        // 1. Colle ta config Firebase ici (apiKey, projectId, etc.)
         const firebaseConfig = {
             apiKey: "AIzaSyDOLvy2PhthQZuBvaVPfq0TWquBuyP3gs4",
             authDomain: "texture-lab-fivem.firebaseapp.com",
@@ -42,43 +41,51 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // 2. Ta fonction de suppression
         function supprimerDoc(collection, id) {
             if(confirm("Supprimer cette entrée ?")) {
                 db.collection(collection).doc(id).delete();
             }
         }
 
+        // 3. Le code pour afficher les commandes
         db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
             const container = document.getElementById("commandes-list");
             let totalCA = 0;
             container.innerHTML = "<h3>📦 Commandes Validées</h3>";
             snapshot.forEach(doc => {
                 const data = doc.data();
+                const id = doc.id;
                 const prix = data.montant_total || 0;
                 totalCA += prix;
                 container.innerHTML += `
-                    <div class="log-item" style="border-left: 4px solid var(--neon-green);">
-                        <span style="color: var(--neon-green); font-weight: bold;">✅ VALIDÉE</span><br>
-                        <span>Client: <strong>${data.pseudo}</strong></span><br>
+                    <div class="log-item" style="border-left-color: #00ff00; position: relative;">
+                        <span style="color: #00ff00; font-weight: bold;">COMMANDE VALIDÉE</span><br>
+                        <span>Pseudo: <strong>${data.pseudo || "Anonyme"}</strong></span><br>
                         <strong>Articles:</strong> ${data.articles}<br>
                         <strong>Total:</strong> ${prix}€<br>
-                        <button onclick="supprimerDoc('commandes_finales', '${doc.id}')" class="delete-btn">✖</button>
+                        <small>${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
+                        <button onclick="supprimerDoc('commandes_finales', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #ff4444; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
                     </div>`;
             });
-            container.insertAdjacentHTML('afterbegin', `<div class="total-ca-box">💰 Chiffre d'Affaires : <strong>${totalCA}€</strong></div>`);
+            container.insertAdjacentHTML('afterbegin', `<div style="padding: 10px; background: #222; border-radius: 5px; margin-bottom: 15px;">💰 Total Validé : <strong>${totalCA}€</strong></div>`);
         });
 
+        // 4. Le code pour les paniers
         db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
             const container = document.getElementById("visites-list");
-            container.innerHTML = "<h3>🛒 Paniers Actifs</h3>";
+            container.innerHTML = "<h3>🛒 Paniers en cours (non validés)</h3>";
             snapshot.forEach(doc => {
                 const data = doc.data();
+                const id = doc.id;
+                const listeArticles = data.articles.map(a => `<span style="font-size: 0.8rem; background: #333; padding: 2px 5px; border-radius: 3px; margin-right: 5px;">${a.nom}</span>`).join(' ');
                 container.innerHTML += `
-                    <div class="log-item" style="border-left: 4px solid var(--neon-purple);">
-                        <span style="color: var(--neon-purple); font-weight: bold;">🛒 EN COURS</span><br>
+                    <div class="log-item" style="border-left-color: #5865F2; position: relative;">
+                        <span style="color: #5865F2; font-weight: bold;">PANIER ACTIF</span><br>
                         <span>Utilisateur: <strong>${data.pseudo}</strong></span><br>
-                        <span>Articles: ${data.articles.length}</span><br>
-                        <button onclick="supprimerDoc('paniers_actifs', '${doc.id}')" class="delete-btn">✖</button>
+                        <div style="margin: 8px 0;">${listeArticles}</div>
+                        <small>Dernière activité: ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
+                        <button onclick="supprimerDoc('paniers_actifs', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #888; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
                     </div>`;
             });
         });
