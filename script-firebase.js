@@ -8,7 +8,10 @@ const firebaseConfig = {
     appId: "1:342541770662:web:e1c9edd45f217f209d7967"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialisation
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 
 // Variables globales
@@ -16,46 +19,51 @@ let currentUser = localStorage.getItem("discordUser") || null;
 let panier = [];
 
 // --- LOG DE VISITE ---
-db.collection("visites").add({
-    page: window.location.pathname,
-    pseudo: currentUser || "Anonyme",
-    date: new Date()
-});
+// Ajout d'une condition pour ne pas log les visites vides ou de l'admin
+if (!window.location.pathname.includes('admin.html')) {
+    db.collection("visites").add({
+        page: window.location.pathname,
+        pseudo: currentUser || "Anonyme",
+        date: firebase.firestore.FieldValue.serverTimestamp() // Utilise l'heure serveur pour plus de précision
+    });
+}
 
 // --- GESTION DU PROFIL DISCORD ---
 function connexionDiscord() {
-    const input = document.getElementById("discord-input").value;
-    if (input.trim() !== "") {
-        currentUser = input;
+    const input = document.getElementById("discord-input");
+    const pseudo = input.value.trim();
+    
+    if (pseudo !== "") {
+        currentUser = pseudo;
         localStorage.setItem("discordUser", currentUser);
         afficherProfil();
         chargerPanierCloud(); // Récupère le panier sauvegardé s'il existe
     } else {
-        alert("Veuillez entrer un pseudo valide.");
+        alert("⚠️ Veuillez entrer un pseudo valide (ex: User#0000).");
     }
 }
 
 function afficherProfil() {
-    const loginBar = document.getElementById("login-bar");
+    const inputField = document.getElementById("discord-input");
+    const loginBtn = document.querySelector("#login-bar button");
     const welcome = document.getElementById("user-welcome");
     
     if (currentUser && welcome) {
-        // On cache l'input et le bouton, on affiche le pseudo
-        document.getElementById("discord-input").style.display = "none";
-        loginBar.querySelector('button').style.display = "none";
+        if (inputField) inputField.style.display = "none";
+        if (loginBtn) loginBtn.style.display = "none";
         
-        welcome.innerText = "Connecté : " + currentUser;
+        welcome.innerText = "✅ Connecté : " + currentUser;
         welcome.style.display = "inline";
     }
 }
 
 // --- SYNCHRONISATION CLOUD ---
 function sauvegarderPanierCloud() {
-    if (currentUser) {
+    if (currentUser && panier.length > 0) {
         db.collection("paniers_actifs").doc(currentUser).set({
             pseudo: currentUser,
             articles: panier,
-            derniere_maj: new Date()
+            derniere_maj: firebase.firestore.FieldValue.serverTimestamp()
         });
     }
 }
@@ -66,12 +74,18 @@ function chargerPanierCloud() {
             if (doc.exists) {
                 const data = doc.data();
                 panier = data.articles || [];
-                // Mise à jour de l'affichage
-                document.getElementById("cart-count").innerText = panier.length;
-                if(panier.length > 0) {
-                    document.getElementById("cart-btn").style.display = "block";
+                
+                // Mise à jour de l'affichage du badge panier
+                const cartCount = document.getElementById("cart-count");
+                const cartBtn = document.getElementById("cart-btn");
+                
+                if (cartCount) cartCount.innerText = panier.length;
+                if (cartBtn && panier.length > 0) {
+                    cartBtn.style.display = "block";
                 }
             }
+        }).catch((error) => {
+            console.log("Erreur lors du chargement du panier:", error);
         });
     }
 }
@@ -80,21 +94,28 @@ function chargerPanierCloud() {
 function ajouterAuPanier(nom, prix) {
     if (!currentUser) {
         alert("⚠️ Connecte-toi avec ton pseudo Discord en haut de page pour ajouter des articles !");
+        // On scrolle vers le haut pour montrer où se connecter
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
     }
 
     panier.push({ nom, prix });
-    document.getElementById("cart-count").innerText = panier.length;
-    document.getElementById("cart-btn").style.display = "block";
     
-    // Log d'intention
+    // Mise à jour interface
+    const cartCount = document.getElementById("cart-count");
+    const cartBtn = document.getElementById("cart-btn");
+    
+    if (cartCount) cartCount.innerText = panier.length;
+    if (cartBtn) cartBtn.style.display = "block";
+    
+    // Log d'intention immédiat (pour voir ce que les gens regardent même s'ils ne valident pas)
     db.collection("intentions").add({ 
         article: nom, 
+        prix: prix,
         pseudo: currentUser, 
-        date: new Date() 
+        date: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    // Sauvegarde automatique du profil
     sauvegarderPanierCloud();
 }
 
@@ -102,20 +123,22 @@ function validerCommande() {
     if (panier.length === 0) return;
 
     let recap = panier.map(i => i.nom).join(", ");
+    let total = panier.reduce((sum, item) => sum + item.prix, 0);
     
     db.collection("commandes_finales").add({
         pseudo: currentUser,
         articles: recap,
-        date: new Date()
+        montant_total: total,
+        date: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-        // On vide le panier cloud après commande si besoin, ou on le laisse
-        alert("Sélection enregistrée, " + currentUser + " ! Direction Discord.");
-        window.location.href = "https://discord.gg/ton-lien"; // REMPLACE PAR TON LIEN
+        alert("🚀 Sélection enregistrée, " + currentUser + " ! Direction Discord pour ton ticket.");
+        // REMPLACE BIEN PAR TON LIEN DISCORD CI-DESSOUS
+        window.location.href = "https://discord.gg/TON_LIEN_ICI"; 
     });
 }
 
-// Lancement auto au chargement de chaque page
-window.onload = () => {
+// Lancement auto au chargement
+window.addEventListener('DOMContentLoaded', () => {
     afficherProfil();
     chargerPanierCloud();
-};
+});
