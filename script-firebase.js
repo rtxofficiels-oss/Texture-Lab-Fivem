@@ -133,7 +133,7 @@ function validerCommande() {
     }).then(() => {
         alert("🚀 Sélection enregistrée, " + currentUser + " ! Direction Discord pour ton ticket.");
         // REMPLACE BIEN PAR TON LIEN DISCORD CI-DESSOUS
-        window.location.href = "https://discord.gg/S4y5s82nWw"; 
+        window.location.href = "https://discord.gg/TON_LIEN_ICI"; 
     });
 }
 
