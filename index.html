@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texture Studio | Accueil</title>
+    <title>Texture Lab Fivem | Accueil</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
-        <div class="logo">TEXTURE STUDIO</div>
+        <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
-            <a href="index.html">Accueil</a>
+            <a href="index.html" class="active">Accueil</a>
             <div class="dropdown">
                 <a href="#">Vêtements ▾</a>
                 <div class="dropdown-content">
-                    <a href="militaire.html">Militaire</a>
-                    <a href="secours.html">Secours</a>
-                    <a href="civil.html">Civil</a>
-                </div>
+                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
+                    <a href="secours.html">Services de Secours</a>
+                    <a href="civil.html">Civil & RP Basique</a>
+                    <a href="entreprise.html">Entreprise & Pro</a> </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
@@ -32,15 +32,16 @@
     </nav>
 
     <header class="container" style="text-align:center; padding: 60px 20px;">
+        <div class="category-badge" style="align-self: center; margin-bottom: 10px;">Studio Créatif</div>
         <h1>Services de Textures Professionnels pour FiveM</h1>
-        <p>Optimisation Lore-Friendly et Créations Personnalisées</p>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">Optimisation Lore-Friendly et Créations Personnalisées sur mesure.</p>
     </header>
 
     <div class="container grid">
         <div class="card">
             <div class="category-badge">Optimisation</div>
             <h2>Nettoyage Lore-Friendly</h2>
-            <p>Retrait de logos et drapeaux réels (15Go+ supportés).</p>
+            <p>Retrait de logos et drapeaux réels pour conformité serveur. Supporte les packs massifs (15Go+).</p>
             <span class="price-tag">40.00€</span>
             <button onclick="ajouterAuPanier('Nettoyage Pack EUP', 40)" class="btn">Ajouter au panier</button>
         </div>
@@ -48,13 +49,25 @@
         <div class="card">
             <div class="category-badge">Véhicules</div>
             <h2>Retexturage Véhicules</h2>
-            <p>Débadgeage marques réelles via .ytd.</p>
+            <p>Débadgeage de marques réelles et création de livrées personnalisées via fichiers .ytd.</p>
             <span class="price-tag">15.00€</span>
             <button onclick="ajouterAuPanier('Débadgeage Véhicule', 15)" class="btn">Ajouter au panier</button>
+        </div>
+        
+        <div class="card">
+            <div class="category-badge">Custom</div>
+            <h2>Pack Entreprise Complet</h2>
+            <p>Identité visuelle complète pour votre société (Vêtements + Logo + Accessoires).</p>
+            <span class="price-tag">40.00€</span>
+            <button onclick="ajouterAuPanier('Pack Entreprise Complet', 40)" class="btn">Ajouter au panier</button>
         </div>
     </div>
 
     <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+
+    <footer>
+        <p>&copy; 2026 Texture Lab Fivem - Tous droits réservés</p>
+    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
