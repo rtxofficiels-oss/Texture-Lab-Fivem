@@ -2,21 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
 
 :root {
-    /* Couleurs extraites du logo */
-    --neon-blue: #00e5ff;
-    --neon-purple: #9d00ff;
-    --neon-green: #39ff14;
-    
-    --primary: var(--neon-blue);
-    --primary-hover: #b3f7ff;
-    --bg: #030612; 
-    --card: #080c1d;
+    --primary: #cf0a0a;
+    --primary-hover: #ff1a1a;
+    --bg: #0b0b0b;
+    --card: #161616;
     --text: #ffffff;
-    --text-muted: #8b9bb4;
-    
-    /* Effets de lueur (Glow) */
-    --shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-    --glow-blue: 0 0 10px var(--neon-blue), 0 0 20px rgba(0, 229, 255, 0.3);
+    --text-muted: #a0a0a0;
+    --shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
 
 * { box-sizing: border-box; }
@@ -24,182 +16,188 @@
 body { 
     font-family: 'Inter', sans-serif; 
     background-color: var(--bg); 
-    background-image: radial-gradient(circle at 50% 50%, #0a1129 0%, var(--bg) 80%);
     color: var(--text); 
     margin: 0; 
     line-height: 1.6;
 }
 
-/* --- LOGO IMAGE (CORRIGÉ) --- */
-.logo { 
-    display: flex; 
-    align-items: center;
-    flex: 0 0 auto; /* Empêche le logo de s'écraser */
-}
-
-.logo-img { 
-    height: 70px; /* Taille optimale pour ton logo détaillé */
-    width: auto; 
-    transition: 0.3s;
-    display: block;
-    filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.2));
-}
-
-.logo-img:hover { 
-    filter: drop-shadow(var(--glow-blue)); 
-    transform: scale(1.05);
-}
-
-/* --- BARRE DE CONNEXION DISCORD --- */
+/* --- NOUVEAU : BARRE DE CONNEXION DISCORD --- */
 #login-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
     padding: 12px 8%;
-    background: rgba(0, 0, 0, 0.6);
-    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+    background: #000;
+    border-bottom: 1px solid #222;
     position: relative;
     z-index: 1100;
-    backdrop-filter: blur(5px);
 }
 
-/* --- NAVIGATION & DROPDOWN (CORRIGÉ POUR L'ALIGNEMENT) --- */
+#login-bar input {
+    background: #111;
+    color: white;
+    border: 1px solid #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    width: 220px;
+}
+
+#login-bar input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 5px rgba(207, 10, 10, 0.3);
+}
+
+#user-welcome {
+    font-size: 0.9rem;
+    color: #00ff00; /* Vert pour montrer qu'on est connecté */
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+/* --- NAVIGATION & DROPDOWN --- */
 nav {
     display: flex;
-    justify-content: space-between; /* Pousse le logo à gauche et le menu à droite */
-    align-items: center; 
-    padding: 0 8%; /* Ajusté pour laisser respirer les bords */
-    background: rgba(0, 0, 0, 0.85);
-    border-bottom: 2px solid var(--neon-purple); 
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 8%;
+    background: rgba(0, 0, 0, 0.95);
+    border-bottom: 2px solid var(--primary);
     position: sticky;
     top: 0;
     z-index: 1000;
     backdrop-filter: blur(10px);
-    height: 100px; /* Hauteur fixe pour stabiliser le menu */
 }
 
-.menu {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex: 1; /* Prend l'espace restant pour bien coller à droite */
-}
+.logo { font-weight: 700; font-size: 1.4rem; color: var(--primary); letter-spacing: 1px; }
+.menu { display: flex; align-items: center; }
 
 nav a { 
-    color: var(--text-muted); 
+    color: var(--text); 
     text-decoration: none; 
-    margin-left: 30px; 
-    font-size: 0.9rem; 
-    font-weight: 600;
+    margin-left: 25px; 
+    font-size: 0.85rem; 
+    font-weight: 500;
     transition: 0.3s;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
-nav a:hover, nav a.active { 
-    color: var(--neon-blue); 
-    text-shadow: var(--glow-blue); 
-}
+nav a:hover { color: var(--primary); }
 
-/* --- LE RESTE DU CSS EST CONSERVÉ ET NETTOYÉ --- */
-
-.dropdown { position: relative; }
-
+.dropdown { position: relative; display: inline-block; }
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #030612;
-    min-width: 180px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    background-color: #111;
+    min-width: 200px;
+    box-shadow: var(--shadow);
     z-index: 1;
-    border: 1px solid var(--neon-purple);
+    border: 1px solid var(--primary);
     top: 100%;
-    right: 0; /* Aligne le menu déroulant à droite */
 }
 
 .dropdown-content a {
     display: block;
     margin: 0;
     padding: 12px 16px;
-    font-size: 0.8rem;
-    border-bottom: 1px solid rgba(157, 0, 255, 0.1);
+    font-size: 0.75rem;
+    border-bottom: 1px solid #222;
     text-align: left;
 }
 
 .dropdown:hover .dropdown-content { display: block; }
 
-.container { max-width: 1200px; margin: auto; padding: 60px 20px; }
-h1, h2, h3 { color: var(--neon-blue); text-shadow: var(--glow-blue); text-transform: uppercase; }
-
+/* --- CONTENU --- */
+.container { max-width: 1100px; margin: auto; padding: 50px 20px; }
 .grid { 
     display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 30px; 
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .card {
     background: var(--card);
     border-radius: 12px;
     padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: 0.3s;
+    border: 1px solid #222;
+    transition: transform 0.3s, border-color 0.3s;
     box-shadow: var(--shadow);
+    position: relative;
     display: flex;
     flex-direction: column;
 }
 
-.card:hover { 
-    transform: translateY(-10px); 
-    border-color: var(--neon-blue); 
-    box-shadow: var(--glow-blue); 
+.card:hover { transform: translateY(-8px); border-color: var(--primary); }
+.card h3, .card h2 { margin-top: 10px; color: var(--primary); }
+.card p { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; }
+
+.price-tag { color: var(--primary); font-weight: 700; font-size: 1.2rem; display: block; margin: 15px 0; }
+.category-badge {
+    background: #333;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    align-self: flex-start;
 }
 
-.price-tag { color: var(--neon-green); font-weight: 700; font-size: 1.5rem; margin: 20px 0; }
-
+/* --- BOUTONS --- */
 .btn {
-    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    display: inline-block;
+    background: var(--primary);
     color: white;
-    padding: 14px;
+    padding: 12px 28px;
     text-decoration: none;
     border-radius: 6px;
     font-weight: 700;
+    font-size: 0.9rem;
+    transition: 0.3s;
     border: none;
     cursor: pointer;
     width: 100%;
-    transition: 0.3s;
+    text-align: center;
 }
 
 .btn:hover { 
-    filter: brightness(1.2);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+    background: var(--primary-hover); 
+    box-shadow: 0 0 15px rgba(207, 10, 10, 0.4); 
+    transform: scale(1.02);
 }
 
-/* Panier */
+/* --- PANIER FLOTTANT --- */
 .cart-floater {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
+    background: var(--primary);
     color: white;
-    padding: 15px 30px;
+    padding: 15px 25px;
     border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(207, 10, 10, 0.5);
+    cursor: pointer;
+    z-index: 2000;
+    display: none; /* Affiché par JS */
     font-weight: 700;
     border: 2px solid rgba(255,255,255,0.2);
-    z-index: 2000;
-    display: none;
+    transition: 0.3s;
 }
 
+.cart-floater:hover {
+    transform: scale(1.1) translateY(-5px);
+    background: var(--primary-hover);
+}
+
+footer { text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #222; margin-top: 50px; }
+
 /* Responsive Mobile */
-@media (max-width: 768px) {
-    nav { 
-        height: auto; 
-        padding: 15px 5%; 
-        flex-direction: column; 
-        gap: 15px;
-    }
-    .menu { justify-content: center; width: 100%; }
-    nav a { margin: 0 10px; font-size: 0.75rem; }
-    .logo-img { height: 50px; }
+@media (max-width: 600px) {
+    #login-bar { flex-direction: column; gap: 10px; }
+    #login-bar input { width: 100%; }
+    nav { padding: 15px 5%; }
+    .cart-floater { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 0.8rem; }
 }
