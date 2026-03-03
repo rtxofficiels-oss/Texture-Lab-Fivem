@@ -7,10 +7,10 @@
     <title>Portfolio | Texture Lab Fivem</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
@@ -23,10 +23,11 @@
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
+                    <a href="entreprise.html">Entreprise & Pro</a>
                 </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
-            <a href="portfolio.html">Portfolio</a>
+            <a href="portfolio.html" class="active">Portfolio</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
@@ -41,35 +42,35 @@
                 <div class="category-badge">Nettoyage Lore-Friendly</div>
                 <h3>Démilitarisation Pack EUP</h3>
                 <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
-                    <div style="text-align: center;">
-                        <small style="color: var(--primary);">AVANT</small><br>
-                        <img src="img/avant1.jpg" alt="Pack avant" style="width: 100%; border-radius: 5px; border: 1px solid #333;">
+                    <div style="flex: 1; text-align: center;">
+                        <small style="color: var(--primary); font-weight: bold;">AVANT</small>
+                        <img src="img/avant1.jpg" alt="Pack avant" style="width: 100%; border-radius: 5px; border: 1px solid #333; margin-top: 5px; aspect-ratio: 1/1; object-fit: cover;">
                     </div>
-                    <div style="text-align: center;">
-                        <small style="color: #00ff00;">APRÈS</small><br>
-                        <img src="img/apres1.jpg" alt="Pack après" style="width: 100%; border-radius: 5px; border: 1px solid var(--primary);">
+                    <div style="flex: 1; text-align: center;">
+                        <small style="color: #00ff00; font-weight: bold;">APRÈS</small>
+                        <img src="img/apres1.jpg" alt="Pack après" style="width: 100%; border-radius: 5px; border: 1px solid var(--primary); margin-top: 5px; aspect-ratio: 1/1; object-fit: cover;">
                     </div>
                 </div>
-                <p>Retrait complet des logos réels sur pack EUP massif (15Go). Optimisation .ytd incluse.</p>
+                <p>Retrait complet des logos réels sur pack EUP massif (15Go). Optimisation des textures .ytd incluse.</p>
             </div>
 
             <div class="card">
                 <div class="category-badge">Création Custom</div>
                 <h3>Intégration Logo Serveur</h3>
-                <img src="img/custom1.jpg" alt="Veste custom" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
-                <p>Création de logos HD et intégration précise sur vestes tactiques.</p>
+                <img src="img/custom1.jpg" alt="Veste custom" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333; aspect-ratio: 16/9; object-fit: cover;">
+                <p>Création de logos HD et intégration précise sur vestes tactiques pour les unités K9.</p>
             </div>
 
             <div class="card">
                 <div class="category-badge">Véhicules</div>
-                <h3>Nettoyage Marquage Véhicule</h3>
-                <img src="img/vehicule1.jpg" alt="Véhicule" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
-                <p>Retrait des insignes de marques automobiles pour conformité Lore-Friendly.</p>
+                <h3>Débadgeage Véhicule</h3>
+                <img src="img/vehicule1.jpg" alt="Véhicule" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333; aspect-ratio: 16/9; object-fit: cover;">
+                <p>Retrait des insignes de marques automobiles réelles pour une conformité totale avec FiveM.</p>
             </div>
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">
         🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
