@@ -4,81 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Portfolio | Texture Lab Fivem</title>
+    <title>Portfolio | Texture Lab</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
-        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
-    </div>
-
     <nav>
-        <div class="logo">TEXTURE LAB FIVEM</div>
+        <div class="logo"><img src="img/logo.png" alt="Logo" class="logo-img"></div>
         <div class="menu">
             <a href="index.html">Accueil</a>
-            <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
-                <div class="dropdown-content">
-                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
-                    <a href="secours.html">Services de Secours</a>
-                    <a href="civil.html">Civil & RP Basique</a>
-                </div>
-            </div>
-            <a href="vehicules.html">Véhicules</a>
-            <a href="portfolio.html">Portfolio</a>
+            <a href="portfolio.html" class="active">Portfolio</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
 
     <div class="container">
-        <div class="category-badge">Galerie de Travail</div>
-        <h1>Mes Réalisations</h1>
-        <p style="text-align: center; color: var(--text-muted);">Aperçu de la qualité de nettoyage et de création pour serveurs RP.</p>
-
+        <h1>Nos Réalisations</h1>
+        <p>Aperçu de la qualité Texture Lab pour FiveM.</p>
         <div class="grid">
             <div class="card">
-                <div class="category-badge">Nettoyage Lore-Friendly</div>
-                <h3>Démilitarisation Pack EUP</h3>
-                <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
-                    <div style="text-align: center;">
-                        <small style="color: var(--primary);">AVANT</small><br>
-                        <img src="img/avant1.jpg" alt="Pack avant" style="width: 100%; border-radius: 5px; border: 1px solid #333;">
-                    </div>
-                    <div style="text-align: center;">
-                        <small style="color: #00ff00;">APRÈS</small><br>
-                        <img src="img/apres1.jpg" alt="Pack après" style="width: 100%; border-radius: 5px; border: 1px solid var(--primary);">
-                    </div>
-                </div>
-                <p>Retrait complet des logos réels sur pack EUP massif (15Go). Optimisation .ytd incluse.</p>
-            </div>
-
-            <div class="card">
-                <div class="category-badge">Création Custom</div>
-                <h3>Intégration Logo Serveur</h3>
-                <img src="img/custom1.jpg" alt="Veste custom" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
-                <p>Création de logos HD et intégration précise sur vestes tactiques.</p>
-            </div>
-
-            <div class="card">
-                <div class="category-badge">Véhicules</div>
-                <h3>Nettoyage Marquage Véhicule</h3>
-                <img src="img/vehicule1.jpg" alt="Véhicule" style="width: 100%; border-radius: 5px; margin: 15px 0; border: 1px solid #333;">
-                <p>Retrait des insignes de marques automobiles pour conformité Lore-Friendly.</p>
+                <img src="img/portfolio1.jpg" alt="Work" style="width:100%; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--neon-purple);">
+                <h3>Custom Livery 4K</h3>
+                <p>Projet réalisé pour un serveur RP US.</p>
             </div>
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
-        🛒 Panier (<span id="cart-count">0</span>)
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Texture Lab Fivem - Expertise Texture WIP</p>
-    </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="script-firebase.js"></script>
+    <footer>&copy; 2026 Texture Lab FiveM - Tous droits réservés.</footer>
 </body>
 </html>
