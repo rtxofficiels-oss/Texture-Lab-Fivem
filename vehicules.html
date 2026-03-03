@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Véhicules | Texture Lab</title>
+    <title>Textures Véhicules | Texture Studio</title>
 </head>
 <body>
-    <div id="login-bar">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none;"></span>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
     </div>
 
     <nav>
-        <div class="logo">
-    <img src="img/Gemini_Generated_Image_7uepd67uepd67uep.jpg" alt="Logo Texture Lab" class="logo-img">
-</div>
+        <div class="logo">TEXTURE STUDIO</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
+            <div class="dropdown">
+                <a href="#">Vêtements ▾</a>
+                <div class="dropdown-content">
+                    <a href="militaire.html">Militaire</a>
+                    <a href="secours.html">Secours</a>
+                    <a href="civil.html">Civil</a>
+                </div>
+            </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
+            <a href="contact.html">Contact</a>
         </div>
     </nav>
 
@@ -28,16 +35,26 @@
         <h1>Textures Véhicules</h1>
         <div class="grid">
             <div class="card">
+                <span class="category-badge">Lore-Friendly</span>
+                <h3>Débadgeage Véhicule</h3>
+                <p>Retrait des marques réelles (Mercedes, BMW, etc.) sur fichiers .ytd.</p>
+                <span class="price-tag">15.00€</span>
+                <button onclick="ajouterAuPanier('Débadgeage Véhicule', 15)" class="btn">Ajouter au panier</button>
+            </div>
+            <div class="card">
                 <span class="category-badge">Custom</span>
                 <h3>Livrées Personnalisées</h3>
-                <p>Livrées Police, EMS ou Entreprises sur mesure (4K).</p>
+                <p>Création de livrées Police, EMS ou Entreprises sur mesure.</p>
                 <span class="price-tag">Dès 20.00€</span>
-                <button onclick="ajouterAuPanier('Livrée Véhicule Custom', 20)" class="btn">Ajouter au panier</button>
+                <button onclick="ajouterAuPanier('Livrée Custom', 20)" class="btn">Ajouter au panier</button>
             </div>
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+        🛒 Panier (<span id="cart-count">0</span>)
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="script-firebase.js"></script>
