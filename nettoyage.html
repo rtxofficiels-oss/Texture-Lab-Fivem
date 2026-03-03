@@ -4,66 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Nettoyage Lore-Friendly | Texture Lab Fivem</title>
+    <title>Nettoyage & Fix | Texture Lab</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
-        <div class="logo">TEXTURE LAB FIVEM</div>
+        <div class="logo"><img src="img/logo.png" alt="Logo" class="logo-img"></div>
         <div class="menu">
             <a href="index.html">Accueil</a>
-            <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
-                <div class="dropdown-content">
-                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
-                    <a href="secours.html">Services de Secours</a>
-                    <a href="civil.html">Civil & RP Basique</a>
-                </div>
-            </div>
-            <a href="vehicules.html">Véhicules</a>
-            <a href="portfolio.html">Portfolio</a>
+            <a href="nettoyage.html" class="active">Nettoyage</a>
             <a href="contact.html">Contact</a>
         </div>
     </nav>
 
-    <div class="container" style="text-align: center;">
-        <div class="category-badge">Optimisation & Conformité</div>
-        <h1>Nettoyage de Packs (Démilitarisation)</h1>
-        <p>Traitement manuel de chaque texture pour rendre votre serveur conforme aux règles FiveM (Lore-friendly).</p>
-        
-        <div class="card" style="text-align: left; max-width: 650px; margin: 40px auto; border-left: 4px solid var(--primary);">
-            <h3 style="color: var(--primary);">Pourquoi nettoyer vos packs ?</h3>
-            <p>De nombreux serveurs risquent des sanctions pour l'utilisation de marques réelles. Je traite vos fichiers <strong>.ytd</strong> pour garantir une immersion totale sans risques.</p>
-            
-            <ul style="list-style: none; padding-left: 0; margin: 20px 0;">
-                <li style="margin-bottom: 10px;">✅ <strong>Retrait drapeaux :</strong> USA, UK, FR, etc.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Suppression marques :</strong> Nike, Adidas, etc.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Correction camouflage :</strong> Retouches propres.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Optimisation YTD :</strong> Réduction du poids.</li>
-            </ul>
-
-            <div style="background: #222; padding: 20px; border-radius: 8px; text-align: center;">
-                <p style="margin: 0; font-size: 0.9rem;">Tarif indicatif pour packs massifs (EUP/Props)</p>
-                <span class="price-tag">À partir de 40.00€ / pack</span>
+    <div class="container">
+        <h1>Optimisation & Fixes</h1>
+        <div class="grid">
+            <div class="card">
+                <span class="category-badge" style="color: var(--neon-green); border-color: var(--neon-green);">Optimisation</span>
+                <h3>Nettoyage de Textures</h3>
+                <p>Réduction du poids des textures (YTD) pour améliorer les FPS de votre serveur.</p>
+                <span class="price-tag">Dès 5.00€</span>
+                <button onclick="ajouterAuPanier('Nettoyage/Optimisation', 5)" class="btn">Ajouter au panier</button>
             </div>
-
-            <button onclick="ajouterAuPanier('Nettoyage Pack Lore-Friendly', 40)" class="btn" style="width: 100%; margin-top: 25px;">AJOUTER AU PANIER POUR DEVIS</button>
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
-        🛒 Panier (<span id="cart-count">0</span>)
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Texture Lab Fivem - Expertise Lore-Friendly</p>
-    </footer>
-
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="script-firebase.js"></script>
