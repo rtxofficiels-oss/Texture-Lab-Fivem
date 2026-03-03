@@ -1,3 +1,31 @@
+/* Importation d'une police moderne */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+:root {
+    --primary: #cf0a0a;
+    --primary-hover: #ff1a1a;
+    --bg: #0b0b0b;
+    --card: #161616;
+    --text: #ffffff;
+    --text-muted: #a0a0a0;
+    --shadow: 0 8px 30px rgba(0,0,0,0.5);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { 
+    box-sizing: border-box; 
+    scroll-behavior: smooth;
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg); 
+    color: var(--text); 
+    margin: 0; 
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
 /* --- NAVIGATION & DROPDOWN --- */
 nav {
     display: flex;
@@ -12,16 +40,32 @@ nav {
     backdrop-filter: blur(10px);
 }
 
-.dropdown { 
-    position: relative; 
-    display: inline-block; 
+.logo { 
+    font-weight: 800; 
+    font-size: 1.4rem; 
+    color: var(--text); 
+    text-transform: uppercase;
+}
+.logo span { color: var(--primary); }
+
+.menu { display: flex; align-items: center; }
+
+nav a { 
+    color: var(--text); 
+    text-decoration: none; 
+    margin-left: 25px; 
+    font-size: 0.85rem; 
+    font-weight: 600;
+    transition: var(--transition);
+    text-transform: uppercase;
+    /* On agrandit la zone cliquable pour éviter les trous */
+    padding: 10px 0; 
 }
 
-/* On ajoute un padding au lien pour agrandir sa hitbox naturelle vers le bas */
-.dropdown > a {
-    padding-bottom: 25px; 
-    margin-bottom: -10px;
-}
+nav a:hover, nav a.active { color: var(--primary); }
+
+/* GESTION DROPDOWN SANS COUPURE */
+.dropdown { position: relative; display: inline-block; }
 
 .dropdown-content {
     display: none;
@@ -31,21 +75,19 @@ nav {
     box-shadow: var(--shadow);
     z-index: 1001;
     border: 1px solid var(--primary);
-    top: 40px; /* Ajusté pour coller à la hitbox du lien */
+    top: 100%; /* Collé au bas du nav */
     left: 0;
     border-radius: 0 0 4px 4px;
-    padding: 5px 0;
 }
 
-/* LE PONT INVISIBLE (Hitbox de secours) */
-/* On l'agrandit à 35px pour couvrir largement la zone de la ligne rouge */
+/* LE PONT INVISIBLE (HITBOX) */
 .dropdown-content::before {
     content: "";
     position: absolute;
-    top: -35px; 
+    top: -30px; /* Remplit l'espace vide au dessus */
     left: 0;
     width: 100%;
-    height: 35px;
+    height: 30px;
     background: transparent;
 }
 
@@ -56,20 +98,34 @@ nav {
     font-size: 0.8rem;
     border-bottom: 1px solid #1a1a1a;
     text-align: left;
-    color: var(--text);
     text-transform: none;
-    transition: background 0.2s;
 }
 
-.dropdown-content a:hover {
-    background: rgba(207, 10, 10, 0.1);
-    color: var(--primary);
-}
+.dropdown-content a:hover { background: rgba(207, 10, 10, 0.1); }
 
-.dropdown-content a:last-child { border-bottom: none; }
-
-/* Activation au survol de la zone dropdown entière */
 .dropdown:hover .dropdown-content { 
-    display: block;
+    display: block; 
     animation: fadeIn 0.2s ease-out;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- CARTES ET CONTENU (Pour éviter la page blanche) --- */
+.container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 25px; 
+}
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #222;
+}
+/* ... (le reste de ton design d'origine) ... */
