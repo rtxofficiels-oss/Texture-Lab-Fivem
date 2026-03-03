@@ -23,7 +23,8 @@
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
-                    <a href="entreprise.html">Entreprise & Pro</a> </div>
+                    <a href="entreprise.html">Entreprise & Pro</a> 
+                </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
@@ -101,29 +102,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
     <script src="script-firebase.js"></script> 
-
-    <script>
-        function toggleCart(productName) {
-            const cart = document.getElementById('side-cart');
-            const overlay = document.getElementById('overlay');
-            if(productName) {
-                document.getElementById('product-display-name').innerText = productName;
-            }
-            cart.classList.toggle('active');
-            overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
-        }
-
-        function finaliserCommande(type) {
-            // Remplace l'URL ci-dessous par ton lien de serveur Discord
-            window.location.href = "https://discord.gg/TON_LIEN";
-        }
-
-        // Modifie ta fonction existante pour ouvrir le panneau
-        function ajouterAuPanier(nom, prix) {
-            toggleCart(nom);
-            // Ici tu peux garder ton ancienne logique Firebase si besoin
-        }
-    </script>
 </body>
 </html>
