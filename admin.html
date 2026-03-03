@@ -1,66 +1,94 @@
-// ... config firebase ...
-
-// --- FONCTION POUR SUPPRIMER UN LOG (Nettoyage) ---
-function supprimerDoc(collection, id) {
-    if(confirm("Supprimer cette entrée ?")) {
-        db.collection(collection).doc(id).delete();
-    }
-}
-
-// --- 1. AFFICHAGE DES COMMANDES FINALISÉES ---
-db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
-    const container = document.getElementById("commandes-list");
-    let totalCA = 0; // Calcul du chiffre d'affaires
-    container.innerHTML = "<h3>📦 Commandes Validées</h3>";
-    
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        const prix = data.montant_total || 0;
-        totalCA += prix;
-
-        container.innerHTML += `
-            <div class="log-item" style="border-left: 4px solid #00ff00; position: relative;">
-                <span style="font-weight: bold; color: #00ff00;">COMMANDE VALIDÉE</span><br>
-                <span>Pseudo: <strong>${data.pseudo || "Anonyme"}</strong></span><br>
-                <strong>Articles:</strong> ${data.articles}<br>
-                <strong>Total:</strong> ${prix}€<br>
-                <small>${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
-                
-                <button onclick="supprimerDoc('commandes_finales', '${id}')" 
-                    style="position: absolute; top: 10px; right: 10px; background: #333; color: #ff4444; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">
-                    ✖
-                </button>
-            </div>`;
-    });
-    
-    // Affichage du total en haut de la liste
-    container.insertAdjacentHTML('afterbegin', `<div style="padding: 10px; background: #222; border-radius: 5px; margin-bottom: 15px;">💰 Total Validé : <strong>${totalCA}€</strong></div>`);
-});
-
-// --- 2. AFFICHAGE DES PANIERS EN COURS ---
-db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
-    const container = document.getElementById("visites-list");
-    container.innerHTML = "<h3>🛒 Paniers en cours (non validés)</h3>";
-    
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        const id = doc.id;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin | Texture Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Quelques styles rapides pour l'admin */
+        .log-item { background: #1a1a1a; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--primary); }
+        h3 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Configuration Admin</h1>
         
-        // On liste les articles contenus dans le panier cloud
-        const listeArticles = data.articles.map(a => `<span style="font-size: 0.8rem; background: #333; padding: 2px 5px; border-radius: 3px; margin-right: 5px;">${a.nom}</span>`).join(' ');
+        <div id="commandes-list">
+            <p>Chargement des commandes...</p>
+        </div>
 
-        container.innerHTML += `
-            <div class="log-item" style="border-left: 4px solid #5865F2; position: relative;">
-                <span style="color: #5865F2; font-weight: bold;">PANIER ACTIF</span><br>
-                <span>Utilisateur: <strong>${data.pseudo}</strong></span><br>
-                <div style="margin: 8px 0;">${listeArticles}</div>
-                <small>Dernière activité: ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
-                
-                <button onclick="supprimerDoc('paniers_actifs', '${id}')" 
-                    style="position: absolute; top: 10px; right: 10px; background: #333; color: #888; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">
-                    ✖
-                </button>
-            </div>`;
-    });
-});
+        <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+
+        <div id="visites-list">
+            <p>Chargement des paniers actifs...</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // 1. Colle ta config Firebase ici (apiKey, projectId, etc.)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOLvy2PhthQZuBvaVPfq0TWquBuyP3gs4",
+            authDomain: "texture-lab-fivem.firebaseapp.com",
+            projectId: "texture-lab-fivem",
+            storageBucket: "texture-lab-fivem.firebasestorage.app",
+            messagingSenderId: "342541770662",
+            appId: "1:342541770662:web:e1c9edd45f217f209d7967"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 2. Ta fonction de suppression
+        function supprimerDoc(collection, id) {
+            if(confirm("Supprimer cette entrée ?")) {
+                db.collection(collection).doc(id).delete();
+            }
+        }
+
+        // 3. Le code pour afficher les commandes
+        db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
+            const container = document.getElementById("commandes-list");
+            let totalCA = 0;
+            container.innerHTML = "<h3>📦 Commandes Validées</h3>";
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                const prix = data.montant_total || 0;
+                totalCA += prix;
+                container.innerHTML += `
+                    <div class="log-item" style="border-left-color: #00ff00; position: relative;">
+                        <span style="color: #00ff00; font-weight: bold;">COMMANDE VALIDÉE</span><br>
+                        <span>Pseudo: <strong>${data.pseudo || "Anonyme"}</strong></span><br>
+                        <strong>Articles:</strong> ${data.articles}<br>
+                        <strong>Total:</strong> ${prix}€<br>
+                        <small>${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
+                        <button onclick="supprimerDoc('commandes_finales', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #ff4444; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
+                    </div>`;
+            });
+            container.insertAdjacentHTML('afterbegin', `<div style="padding: 10px; background: #222; border-radius: 5px; margin-bottom: 15px;">💰 Total Validé : <strong>${totalCA}€</strong></div>`);
+        });
+
+        // 4. Le code pour les paniers
+        db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
+            const container = document.getElementById("visites-list");
+            container.innerHTML = "<h3>🛒 Paniers en cours (non validés)</h3>";
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                const listeArticles = data.articles.map(a => `<span style="font-size: 0.8rem; background: #333; padding: 2px 5px; border-radius: 3px; margin-right: 5px;">${a.nom}</span>`).join(' ');
+                container.innerHTML += `
+                    <div class="log-item" style="border-left-color: #5865F2; position: relative;">
+                        <span style="color: #5865F2; font-weight: bold;">PANIER ACTIF</span><br>
+                        <span>Utilisateur: <strong>${data.pseudo}</strong></span><br>
+                        <div style="margin: 8px 0;">${listeArticles}</div>
+                        <small>Dernière activité: ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
+                        <button onclick="supprimerDoc('paniers_actifs', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #888; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
+                    </div>`;
+            });
+        });
+    </script>
+</body>
+</html>
