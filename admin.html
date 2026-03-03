@@ -2,26 +2,115 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Panel Admin | Texture Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | Texture Lab Fivem</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Quelques styles rapides pour l'admin */
-        .log-item { background: #1a1a1a; padding: 15px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid var(--primary); }
-        h3 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
+        /* Styles spécifiques au Panel Admin */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .stats-bar {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid var(--primary);
+            display: inline-block;
+        }
+
+        .log-item { 
+            background: var(--card); 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            border-radius: 10px; 
+            border: 1px solid #222;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .log-item:hover {
+            border-color: #444;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .badge-success { background: #00ff0022; color: #00ff00; border: 1px solid #00ff0055; }
+        .badge-pending { background: #5865F222; color: #5865F2; border: 1px solid #5865F255; }
+
+        .btn-delete {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #222;
+            color: #ff4444;
+            border: 1px solid #444;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+            transition: 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #ff4444;
+            color: white;
+        }
+
+        .item-list span {
+            font-size: 0.8rem;
+            background: #222;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            border: 1px solid #333;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Panel de Configuration Admin</h1>
-        
-        <div id="commandes-list">
-            <p>Chargement des commandes...</p>
+
+    <nav>
+        <div class="logo">TEXTURE <span>LAB</span> ADMIN</div>
+        <div class="menu">
+            <a href="index.html">Retour au site</a>
         </div>
+    </nav>
 
-        <hr style="border: 0; border-top: 1px solid #333; margin: 40px 0;">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Tableau de Bord</h1>
+            <div id="ca-total" class="stats-bar">
+                💰 Chiffre d'Affaires : <strong>0.00€</strong>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <section>
+                <h2 style="color: var(--primary); margin-bottom: 20px;">📦 Commandes Récentes</h2>
+                <div id="commandes-list">
+                    <p style="color: var(--text-muted);">Chargement des commandes...</p>
+                </div>
+            </section>
 
-        <div id="visites-list">
-            <p>Chargement des paniers actifs...</p>
+            <section>
+                <h2 style="color: #5865F2; margin-bottom: 20px;">🛒 Paniers en cours</h2>
+                <div id="visites-list">
+                    <p style="color: var(--text-muted);">Chargement des paniers actifs...</p>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -29,7 +118,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. Colle ta config Firebase ici (apiKey, projectId, etc.)
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDOLvy2PhthQZuBvaVPfq0TWquBuyP3gs4",
             authDomain: "texture-lab-fivem.firebaseapp.com",
@@ -38,54 +127,76 @@
             messagingSenderId: "342541770662",
             appId: "1:342541770662:web:e1c9edd45f217f209d7967"
         };
+        
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // 2. Ta fonction de suppression
+        // Fonction de suppression générique
         function supprimerDoc(collection, id) {
-            if(confirm("Supprimer cette entrée ?")) {
-                db.collection(collection).doc(id).delete();
+            if(confirm("Voulez-vous vraiment supprimer cette entrée ?")) {
+                db.collection(collection).doc(id).delete()
+                .then(() => console.log("Supprimé !"))
+                .catch((error) => alert("Erreur: " + error));
             }
         }
 
-        // 3. Le code pour afficher les commandes
+        // Ecoute des commandes validées
         db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
             const container = document.getElementById("commandes-list");
+            const caDisplay = document.getElementById("ca-total");
             let totalCA = 0;
-            container.innerHTML = "<h3>📦 Commandes Validées</h3>";
+            
+            if (snapshot.empty) {
+                container.innerHTML = "<p>Aucune commande enregistrée.</p>";
+                return;
+            }
+
+            container.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const id = doc.id;
-                const prix = data.montant_total || 0;
+                const prix = parseFloat(data.montant_total) || 0;
                 totalCA += prix;
+
                 container.innerHTML += `
-                    <div class="log-item" style="border-left-color: #00ff00; position: relative;">
-                        <span style="color: #00ff00; font-weight: bold;">COMMANDE VALIDÉE</span><br>
-                        <span>Pseudo: <strong>${data.pseudo || "Anonyme"}</strong></span><br>
-                        <strong>Articles:</strong> ${data.articles}<br>
-                        <strong>Total:</strong> ${prix}€<br>
-                        <small>${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
-                        <button onclick="supprimerDoc('commandes_finales', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #ff4444; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
+                    <div class="log-item">
+                        <div class="badge badge-success">Validée</div>
+                        <button class="btn-delete" onclick="supprimerDoc('commandes_finales', '${id}')">Supprimer</button>
+                        <div style="margin-top:10px;">
+                            <strong>Client :</strong> ${data.pseudo || "Anonyme"}<br>
+                            <strong>Articles :</strong> ${data.articles}<br>
+                            <span style="color:var(--primary); font-weight:bold; font-size:1.1rem;">Total : ${prix}€</span><br>
+                            <small style="color:#666;">📅 ${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
+                        </div>
                     </div>`;
             });
-            container.insertAdjacentHTML('afterbegin', `<div style="padding: 10px; background: #222; border-radius: 5px; margin-bottom: 15px;">💰 Total Validé : <strong>${totalCA}€</strong></div>`);
+            caDisplay.innerHTML = `💰 Chiffre d'Affaires : <strong>${totalCA.toFixed(2)}€</strong>`;
         });
 
-        // 4. Le code pour les paniers
+        // Ecoute des paniers actifs
         db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
             const container = document.getElementById("visites-list");
-            container.innerHTML = "<h3>🛒 Paniers en cours (non validés)</h3>";
+            
+            if (snapshot.empty) {
+                container.innerHTML = "<p>Aucun panier actif pour le moment.</p>";
+                return;
+            }
+
+            container.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const id = doc.id;
-                const listeArticles = data.articles.map(a => `<span style="font-size: 0.8rem; background: #333; padding: 2px 5px; border-radius: 3px; margin-right: 5px;">${a.nom}</span>`).join(' ');
+                const articlesHtml = data.articles ? data.articles.map(a => `<span>${a.nom}</span>`).join('') : 'Panier vide';
+
                 container.innerHTML += `
-                    <div class="log-item" style="border-left-color: #5865F2; position: relative;">
-                        <span style="color: #5865F2; font-weight: bold;">PANIER ACTIF</span><br>
-                        <span>Utilisateur: <strong>${data.pseudo}</strong></span><br>
-                        <div style="margin: 8px 0;">${listeArticles}</div>
-                        <small>Dernière activité: ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
-                        <button onclick="supprimerDoc('paniers_actifs', '${id}')" style="position: absolute; top: 10px; right: 10px; background: #333; color: #888; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">✖</button>
+                    <div class="log-item">
+                        <div class="badge badge-pending">Panier Actif</div>
+                        <button class="btn-delete" onclick="supprimerDoc('paniers_actifs', '${id}')">Supprimer</button>
+                        <div style="margin-top:10px;">
+                            <strong>Utilisateur :</strong> ${data.pseudo || "Anonyme"}<br>
+                            <div class="item-list" style="margin: 10px 0;">${articlesHtml}</div>
+                            <small style="color:#666;">🕒 Actif le : ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
+                        </div>
                     </div>`;
             });
         });
