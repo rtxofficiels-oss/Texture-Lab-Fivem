@@ -4,54 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>CGV | Sécurité & Paiement | Texture Lab Fivem</title>
+    <title>CGV | Texture Lab</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
-        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
-    </div>
-
     <nav>
-        <div class="logo">TEXTURE LAB FIVEM</div>
+        <div class="logo"><img src="img/logo.png" alt="Logo" class="logo-img"></div>
         <div class="menu">
             <a href="index.html">Accueil</a>
-            <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
-                <div class="dropdown-content">
-                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
-                    <a href="secours.html">Services de Secours</a>
-                    <a href="civil.html">Civil & RP Basique</a>
-                </div>
-            </div>
-            <a href="vehicules.html">Véhicules</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="contact.html">Contact</a>
+            <a href="cgv.html" class="active">CGV</a>
         </div>
     </nav>
 
     <div class="container">
         <h1>Conditions Générales de Vente</h1>
-        <p style="text-align: center; color: #a0a0a0;">En passant commande, vous acceptez l'intégralité des clauses ci-dessous.</p>
-        
-        <div class="card" style="text-align: left; line-height: 1.8; border-left: 4px solid var(--primary);">
-            <p><strong>1. Processus de Paiement :</strong> Pour toute commande supérieure à 20€, un acompte de 50% est exigé avant le début des travaux. Le solde restant doit être réglé avant la livraison finale des fichiers.</p>
-            <p><strong>2. Propriété Intellectuelle :</strong> Les textures créées ou modifiées restent la propriété exclusive du studio jusqu'au paiement intégral.</p>
-            <p><strong>3. Livraison & Format :</strong> Les fichiers sont livrés exclusivement au format <strong>.ytd</strong> optimisé.</p>
-            <p><strong>4. Droit de Rétractation :</strong> Étant donné la nature numérique, aucun remboursement ne sera effectué après début du travail.</p>
-            <p><strong>5. Responsabilité :</strong> Le client est responsable de posséder les droits sur les packs envoyés.</p>
+        <div class="card" style="border-color: var(--neon-purple);">
+            <p><strong>1. Services :</strong> Texture Lab propose des créations numériques pour FiveM.</p>
+            <p><strong>2. Livraison :</strong> Les fichiers sont livrés via Discord après validation du paiement.</p>
+            <p><strong>3. Remboursement :</strong> Aucun remboursement n'est possible une fois le fichier livré.</p>
         </div>
     </div>
-
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
-
-    <footer>
-        <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
-    </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="script-firebase.js"></script>
 </body>
 </html>
