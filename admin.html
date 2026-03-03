@@ -1,33 +1,66 @@
-<script>
-    // ... config firebase ...
+// ... config firebase ...
 
-    // Afficher les commandes avec le Pseudo Discord
-    db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
-        const container = document.getElementById("commandes-list");
-        container.innerHTML = "";
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            container.innerHTML += `
-                <div class="log-item">
-                    <span>Pseudo: ${data.pseudo || "Anonyme"}</span><br>
-                    <strong>Articles:</strong> ${data.articles}<br>
-                    <small>${data.date.toDate().toLocaleString()}</small>
-                </div>`;
-        });
-    });
+// --- FONCTION POUR SUPPRIMER UN LOG (Nettoyage) ---
+function supprimerDoc(collection, id) {
+    if(confirm("Supprimer cette entrée ?")) {
+        db.collection(collection).doc(id).delete();
+    }
+}
 
-    // Afficher qui a un panier actif en ce moment
-    db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
-        const container = document.getElementById("visites-list"); // On réutilise cette zone
-        container.innerHTML = "<h3>Paniers en cours (non validés)</h3>";
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            container.innerHTML += `
-                <div class="log-item" style="border-left-color: #5865F2;">
-                    <span>Utilisateur: ${data.pseudo}</span><br>
-                    ${data.articles.length} article(s) dans le panier<br>
-                    <small>Dernière activité: ${data.derniere_maj.toDate().toLocaleString()}</small>
-                </div>`;
-        });
+// --- 1. AFFICHAGE DES COMMANDES FINALISÉES ---
+db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
+    const container = document.getElementById("commandes-list");
+    let totalCA = 0; // Calcul du chiffre d'affaires
+    container.innerHTML = "<h3>📦 Commandes Validées</h3>";
+    
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const id = doc.id;
+        const prix = data.montant_total || 0;
+        totalCA += prix;
+
+        container.innerHTML += `
+            <div class="log-item" style="border-left: 4px solid #00ff00; position: relative;">
+                <span style="font-weight: bold; color: #00ff00;">COMMANDE VALIDÉE</span><br>
+                <span>Pseudo: <strong>${data.pseudo || "Anonyme"}</strong></span><br>
+                <strong>Articles:</strong> ${data.articles}<br>
+                <strong>Total:</strong> ${prix}€<br>
+                <small>${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
+                
+                <button onclick="supprimerDoc('commandes_finales', '${id}')" 
+                    style="position: absolute; top: 10px; right: 10px; background: #333; color: #ff4444; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">
+                    ✖
+                </button>
+            </div>`;
     });
-</script>
+    
+    // Affichage du total en haut de la liste
+    container.insertAdjacentHTML('afterbegin', `<div style="padding: 10px; background: #222; border-radius: 5px; margin-bottom: 15px;">💰 Total Validé : <strong>${totalCA}€</strong></div>`);
+});
+
+// --- 2. AFFICHAGE DES PANIERS EN COURS ---
+db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
+    const container = document.getElementById("visites-list");
+    container.innerHTML = "<h3>🛒 Paniers en cours (non validés)</h3>";
+    
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const id = doc.id;
+        
+        // On liste les articles contenus dans le panier cloud
+        const listeArticles = data.articles.map(a => `<span style="font-size: 0.8rem; background: #333; padding: 2px 5px; border-radius: 3px; margin-right: 5px;">${a.nom}</span>`).join(' ');
+
+        container.innerHTML += `
+            <div class="log-item" style="border-left: 4px solid #5865F2; position: relative;">
+                <span style="color: #5865F2; font-weight: bold;">PANIER ACTIF</span><br>
+                <span>Utilisateur: <strong>${data.pseudo}</strong></span><br>
+                <div style="margin: 8px 0;">${listeArticles}</div>
+                <small>Dernière activité: ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
+                
+                <button onclick="supprimerDoc('paniers_actifs', '${id}')" 
+                    style="position: absolute; top: 10px; right: 10px; background: #333; color: #888; border: none; cursor: pointer; border-radius: 3px; padding: 2px 8px;">
+                    ✖
+                </button>
+            </div>`;
+    });
+});
