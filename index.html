@@ -63,7 +63,37 @@
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+    <div id="cart-btn" class="cart-floater" onclick="toggleCart()">🛒 Panier (<span id="cart-count">0</span>)</div>
+
+    <div id="side-cart" class="cart-panel">
+        <div class="cart-header">
+            <h3>Votre Panier</h3>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        
+        <div class="cart-content">
+            <div class="cart-item-info">
+                <p id="product-display-name">Aucun produit sélectionné</p>
+            </div>
+
+            <div class="cart-input-group">
+                <label>Quantité</label>
+                <input type="number" id="qty-input" value="1" min="1">
+            </div>
+
+            <div class="cart-input-group">
+                <label>Code Promo</label>
+                <input type="text" id="promo-input" placeholder="Ex: LAB2026">
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <button class="btn btn-checkout" onclick="finaliserCommande('paiement')">Continuer vers le Paiement</button>
+            <button class="btn btn-discord-alt" onclick="finaliserCommande('discord')">Continuer sur Discord</button>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="toggleCart()"></div>
 
     <footer>
         <p>&copy; 2026 Texture Lab Fivem - Tous droits réservés</p>
@@ -72,5 +102,28 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="script-firebase.js"></script> 
+
+    <script>
+        function toggleCart(productName) {
+            const cart = document.getElementById('side-cart');
+            const overlay = document.getElementById('overlay');
+            if(productName) {
+                document.getElementById('product-display-name').innerText = productName;
+            }
+            cart.classList.toggle('active');
+            overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
+        }
+
+        function finaliserCommande(type) {
+            // Remplace l'URL ci-dessous par ton lien de serveur Discord
+            window.location.href = "https://discord.gg/TON_LIEN";
+        }
+
+        // Modifie ta fonction existante pour ouvrir le panneau
+        function ajouterAuPanier(nom, prix) {
+            toggleCart(nom);
+            // Ici tu peux garder ton ancienne logique Firebase si besoin
+        }
+    </script>
 </body>
 </html>
