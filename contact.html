@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Contact & Commande | Texture Studio</title>
+    <title>Contact & Commande | Texture Lab Fivem</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
-        <div class="logo">TEXTURE STUDIO</div>
+        <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
             <div class="dropdown">
@@ -23,40 +23,50 @@
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
-                </div>
+                    <a href="entreprise.html">Entreprise & Pro</a> </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
-            <a href="contact.html">Contact</a>
+            <a href="contact.html" class="active">Contact</a>
         </div>
     </nav>
 
     <div class="container" style="text-align: center;">
-        <div class="category-badge">Contact</div>
+        <div class="category-badge">Support & Devis</div>
         <h1>Prêt à lancer votre projet ?</h1>
-        <p>Toutes les commandes passent par mon Discord pour garantir un suivi personnalisé.</p>
+        <p style="color: var(--text-muted);">Toutes les commandes passent par mon Discord pour garantir un suivi personnalisé et sécurisé.</p>
         
-        <div class="card" style="max-width: 600px; margin: 40px auto; border-top: 4px solid var(--primary);">
-            <h3 style="color: var(--primary);">Processus de commande</h3>
-            <ul style="text-align: left; list-style: none; padding-left: 10px;">
-                <li style="margin-bottom: 15px;"><strong>1️⃣ Connexion :</strong> Rejoignez le serveur Discord officiel via le bouton ci-dessous.</li>
-                <li style="margin-bottom: 15px;"><strong>2️⃣ Ouverture de Ticket :</strong> Créez un ticket dans le salon "Devis-Texture".</li>
-                <li style="margin-bottom: 15px;"><strong>3️⃣ Briefing :</strong> Envoyez vos fichiers .ytd ou les liens des packs à modifier.</li>
-                <li style="margin-bottom: 15px;"><strong>4️⃣ Validation :</strong> Signature du devis, acompte (si > 20€) et lancement du chantier.</li>
+        <div class="card" style="max-width: 650px; margin: 40px auto; border-top: 4px solid var(--primary);">
+            <h3 style="color: var(--primary); text-transform: uppercase;">Processus de commande</h3>
+            <ul style="text-align: left; list-style: none; padding: 0 10px; margin-top: 20px;">
+                <li style="margin-bottom: 20px;">
+                    <strong>1️⃣ Connexion :</strong> Rejoignez le serveur Discord officiel via le bouton ci-dessous.
+                </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>2️⃣ Ouverture de Ticket :</strong> Créez un ticket dans le salon dédié <code>#devis-texture</code>.
+                </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>3️⃣ Briefing :</strong> Envoyez vos fichiers <code>.ytd</code> ou les liens des packs à modifier avec vos instructions.
+                </li>
+                <li style="margin-bottom: 20px;">
+                    <strong>4️⃣ Validation :</strong> Signature du devis, acompte (si > 20€) et lancement immédiat du chantier.
+                </li>
             </ul>
             
-            <a href="https://discord.gg/S4y5s82nWw" class="btn" style="width: 100%; margin-top: 20px;">REJOINDRE LE DISCORD</a>
+            <a href="https://discord.gg/S4y5s82nWw" target="_blank" class="btn" style="margin-top: 10px;">REJOINDRE LE DISCORD</a>
         </div>
 
-        <p style="font-size: 0.8rem; color: #666;">Note : Pour les packs massifs (15Go+), un délai de traitement spécifique sera appliqué.</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted); opacity: 0.7;">
+            Note : Pour les packs massifs (15Go+), un délai de traitement spécifique sera appliqué selon la charge de travail.
+        </p>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
-        🛒 Valider Panier (<span id="cart-count">0</span>)
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">
+        🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
     <footer>
-        <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
+        <p>&copy; 2026 Texture Lab Fivem - Tous droits réservés</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
