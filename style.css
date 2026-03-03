@@ -1,4 +1,4 @@
-/* --- NAVIGATION & DROPDOWN (MIS À JOUR) --- */
+/* --- NAVIGATION & DROPDOWN --- */
 nav {
     display: flex;
     justify-content: space-between;
@@ -15,7 +15,12 @@ nav {
 .dropdown { 
     position: relative; 
     display: inline-block; 
-    height: 100%; /* S'assure que la zone de survol est maximale */
+}
+
+/* On ajoute un padding au lien pour agrandir sa hitbox naturelle vers le bas */
+.dropdown > a {
+    padding-bottom: 25px; 
+    margin-bottom: -10px;
 }
 
 .dropdown-content {
@@ -26,20 +31,21 @@ nav {
     box-shadow: var(--shadow);
     z-index: 1001;
     border: 1px solid var(--primary);
-    top: 100%; /* Se place juste au bord du header */
+    top: 40px; /* Ajusté pour coller à la hitbox du lien */
     left: 0;
     border-radius: 0 0 4px 4px;
     padding: 5px 0;
 }
 
-/* LE PONT INVISIBLE : Empêche le menu de se fermer quand on descend la souris */
+/* LE PONT INVISIBLE (Hitbox de secours) */
+/* On l'agrandit à 35px pour couvrir largement la zone de la ligne rouge */
 .dropdown-content::before {
     content: "";
     position: absolute;
-    top: -20px; /* Couvre l'espace vide entre le lien et le menu */
+    top: -35px; 
     left: 0;
     width: 100%;
-    height: 20px;
+    height: 35px;
     background: transparent;
 }
 
@@ -51,7 +57,7 @@ nav {
     border-bottom: 1px solid #1a1a1a;
     text-align: left;
     color: var(--text);
-    text-transform: none; /* Plus lisible pour les sous-catégories */
+    text-transform: none;
     transition: background 0.2s;
 }
 
@@ -62,217 +68,8 @@ nav {
 
 .dropdown-content a:last-child { border-bottom: none; }
 
-/* Activation du menu au survol */
+/* Activation au survol de la zone dropdown entière */
 .dropdown:hover .dropdown-content { 
     display: block;
     animation: fadeIn 0.2s ease-out;
-}
-
-/* --- Reste du CSS inchangé pour la cohérence --- */
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Importation d'une police moderne */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
-
-:root {
-    --primary: #cf0a0a;
-    --primary-hover: #ff1a1a;
-    --bg: #0b0b0b;
-    --card: #161616;
-    --text: #ffffff;
-    --text-muted: #a0a0a0;
-    --shadow: 0 8px 30px rgba(0,0,0,0.5);
-    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* { 
-    box-sizing: border-box; 
-    scroll-behavior: smooth;
-}
-
-body { 
-    font-family: 'Inter', sans-serif; 
-    background-color: var(--bg); 
-    color: var(--text); 
-    margin: 0; 
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* --- BARRE DE CONNEXION DISCORD --- */
-#login-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 8%;
-    background: #000;
-    border-bottom: 1px solid #222;
-    position: relative;
-    z-index: 1100;
-}
-
-#login-bar input {
-    background: #111;
-    color: white;
-    border: 1px solid #333;
-    padding: 8px 15px;
-    border-radius: 5px;
-    outline: none;
-    font-size: 0.85rem;
-    transition: var(--transition);
-    width: 220px;
-}
-
-#login-bar input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 10px rgba(207, 10, 10, 0.2);
-}
-
-#user-welcome {
-    font-size: 0.9rem;
-    color: #00ff00; 
-    font-weight: 700;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
-}
-
-.logo { 
-    font-weight: 800; 
-    font-size: 1.4rem; 
-    color: var(--text); 
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-.logo span { color: var(--primary); }
-.menu { display: flex; align-items: center; }
-
-nav a { 
-    color: var(--text); 
-    text-decoration: none; 
-    margin-left: 25px; 
-    font-size: 0.85rem; 
-    font-weight: 600;
-    transition: var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-nav a:hover, nav a.active { color: var(--primary); }
-
-/* --- CONTENU --- */
-.container { max-width: 1200px; margin: auto; padding: 40px 20px; }
-h1 { text-align: center; font-size: 2.2rem; margin-bottom: 10px; }
-
-.grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 25px; 
-    margin-top: 40px;
-}
-
-.card {
-    background: var(--card);
-    border-radius: 12px;
-    padding: 25px;
-    border: 1px solid #222;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-}
-
-.card:hover { 
-    transform: translateY(-8px); 
-    border-color: var(--primary); 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-}
-
-.card h3, .card h2 { margin: 15px 0 10px 0; color: var(--text); }
-.card p { color: var(--text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 20px; }
-
-.price-tag { 
-    color: var(--primary); 
-    font-weight: 800; 
-    font-size: 1.4rem; 
-    margin-bottom: 20px; 
-}
-
-.category-badge {
-    background: rgba(207, 10, 10, 0.1);
-    color: var(--primary);
-    padding: 6px 12px;
-    font-size: 0.7rem;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 700;
-    border: 1px solid rgba(207, 10, 10, 0.3);
-    align-self: flex-start;
-}
-
-/* --- BOUTONS --- */
-.btn {
-    background: var(--primary);
-    color: white;
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-.btn:hover { 
-    background: var(--primary-hover); 
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(207, 10, 10, 0.4); 
-}
-
-/* --- PANIER FLOTTANT --- */
-.cart-floater {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: var(--primary);
-    color: white;
-    padding: 18px 28px;
-    border-radius: 50px;
-    box-shadow: 0 15px 35px rgba(207, 10, 10, 0.4);
-    cursor: pointer;
-    z-index: 2000;
-    font-weight: 800;
-    border: 2px solid rgba(255,255,255,0.1);
-    transition: var(--transition);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-footer { 
-    text-align: center; 
-    padding: 60px 20px; 
-    color: var(--text-muted); 
-    font-size: 0.85rem; 
-    border-top: 1px solid #1a1a1a; 
-    margin-top: 60px; 
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    nav { flex-direction: column; gap: 15px; padding: 20px; }
-    .menu { flex-wrap: wrap; justify-content: center; gap: 10px; }
-    nav a { margin: 5px 10px; font-size: 0.75rem; }
-    .dropdown-content { position: static; width: 100%; border: none; background: transparent; }
-    .dropdown-content::before { display: none; }
-    .card { padding: 20px; }
 }
