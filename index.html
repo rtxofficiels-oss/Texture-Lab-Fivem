@@ -3,53 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texture Studio | Accueil</title>
     <link rel="stylesheet" href="style.css">
-    <title>Texture Lab FiveM | Accueil</title>
 </head>
 <body>
-    <div id="login-bar">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord (ex: User#0000)">
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none;"></span>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
     </div>
 
-   <nav>
-    <div class="logo" style="min-width: 150px;">
-        <img src="img/Gemini_Generated_Image_7uepd67uepd67uep.jpg" alt="Logo Texture Lab" class="logo-img" onerror="this.style.display='none'">
-    </div>
-    
-    <div class="menu">
-        <a href="index.html" class="active">Accueil</a>
-        <div class="dropdown">
-            <a href="#">Vêtements ▾</a>
-            <div class="dropdown-content">
-                <a href="militaire.html">Militaire</a>
-                <a href="secours.html">Secours</a>
-                <a href="civil.html">Civil</a>
+    <nav>
+        <div class="logo">TEXTURE STUDIO</div>
+        <div class="menu">
+            <a href="index.html">Accueil</a>
+            <div class="dropdown">
+                <a href="#">Vêtements ▾</a>
+                <div class="dropdown-content">
+                    <a href="militaire.html">Militaire</a>
+                    <a href="secours.html">Secours</a>
+                    <a href="civil.html">Civil</a>
+                </div>
             </div>
+            <a href="vehicules.html">Véhicules</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="contact.html">Contact</a>
         </div>
-        <a href="vehicules.html">Véhicules</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="contact.html">Contact</a>
-    </div>
-</nav>
+    </nav>
 
-    <div class="container">
-        <h1>Élevez votre RP avec Texture Lab</h1>
-        <p>Des designs uniques et néon pour vos serveurs FiveM.</p>
-        <div class="grid">
-            <div class="card">
-                <h3>Nos Services</h3>
-                <p>Découvrez nos créations exclusives pour véhicules et EUP.</p>
-                <a href="portfolio.html" class="btn">Voir le Portfolio</a>
-            </div>
+    <header class="container" style="text-align:center; padding: 60px 20px;">
+        <h1>Services de Textures Professionnels pour FiveM</h1>
+        <p>Optimisation Lore-Friendly et Créations Personnalisées</p>
+    </header>
+
+    <div class="container grid">
+        <div class="card">
+            <div class="category-badge">Optimisation</div>
+            <h2>Nettoyage Lore-Friendly</h2>
+            <p>Retrait de logos et drapeaux réels (15Go+ supportés).</p>
+            <span class="price-tag">40.00€</span>
+            <button onclick="ajouterAuPanier('Nettoyage Pack EUP', 40)" class="btn">Ajouter au panier</button>
+        </div>
+
+        <div class="card">
+            <div class="category-badge">Véhicules</div>
+            <h2>Retexturage Véhicules</h2>
+            <p>Débadgeage marques réelles via .ytd.</p>
+            <span class="price-tag">15.00€</span>
+            <button onclick="ajouterAuPanier('Débadgeage Véhicule', 15)" class="btn">Ajouter au panier</button>
         </div>
     </div>
 
     <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
-    
+
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="script-firebase.js"></script>
+    <script src="script-firebase.js"></script> 
 </body>
 </html>
