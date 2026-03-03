@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Division Militaire | Texture Studio</title>
+    <title>Militaire (Lore-Friendly) | Texture Lab Fivem</title>
 </head>
 <body>
     <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
@@ -14,9 +14,17 @@
     </div>
 
     <nav>
-        <div class="logo">TEXTURE STUDIO</div>
+        <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
+            <div class="dropdown">
+                <a href="#">Vêtements ▾</a>
+                <div class="dropdown-content">
+                    <a href="militaire.html">Militaire (Lore-Friendly)</a>
+                    <a href="secours.html">Services de Secours</a>
+                    <a href="civil.html">Civil & RP Basique</a>
+                </div>
+            </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
             <a href="contact.html">Contact</a>
@@ -24,27 +32,67 @@
     </nav>
 
     <div class="container">
-        <h1>Division Militaire</h1>
+        <div class="category-badge" style="background: #4b5320;">Armée & Forces Spéciales</div>
+        <h1>Équipement Militaire</h1>
+        <p style="text-align: center; color: var(--text-muted);">Textures haute qualité pour l'Armée de Terre, l'Air Force et les unités tactiques (Lore-Friendly).</p>
+        
         <div class="grid">
             <div class="card">
-                <span class="category-badge">Pack Complet</span>
-                <h3>Démilitarisation Totale</h3>
-                <p>Retrait des drapeaux et marques réelles sur packs EUP massifs (+420 textures).</p>
-                <span class="price-tag">Sur Devis</span>
-                <button onclick="ajouterAuPanier('Pack Démilitarisation', 0)" class="btn">Ajouter au panier</button>
+                <div class="category-badge">Protection Tête</div>
+                <h3>Casques / Chapeaux</h3>
+                <p>Casques balistiques, bassets, k集中m, bérêts et casquettes de camouflage.</p>
+                <span class="price-tag">Dès 7.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Casque/Chapeau', 7)" class="btn">Ajouter au panier</button>
             </div>
+
             <div class="card">
-                <span class="category-badge">Accessoires</span>
-                <h3>Casques & Bérets</h3>
-                <p>Ajout de grades, insignes d'unité et retrait de marques fabricants.</p>
-                <span class="price-tag">5.00€ / unité</span>
-                <button onclick="ajouterAuPanier('Casque/Béret Militaire', 5)" class="btn">Ajouter au panier</button>
+                <div class="category-badge">Combat Supérieur</div>
+                <h3>Vestes / Blousons</h3>
+                <p>Parkas tactiques, vestes de combat (BDU) et blousons d'aviateur personnalisés.</p>
+                <span class="price-tag">Dès 15.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Veste/Blouson', 15)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Sous-couche</div>
+                <h3>Tee-shirt / Polo</h3>
+                <p>T-shirts de compression, polos de cérémonie ou hauts techniques respirants.</p>
+                <span class="price-tag">Dès 10.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Tee-shirt/Polo', 10)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Combat Inférieur</div>
+                <h3>Pantalons / Shorts</h3>
+                <p>Pantalons cargo renforcés avec genouillères intégrées et bermudas d'entraînement.</p>
+                <span class="price-tag">Dès 12.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Pantalon/Short', 12)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Équipement Tactique</div>
+                <h3>Gilets par balles / Ceinturons</h3>
+                <p>Porte-plaques lourds, gilets tactiques modulables et ceinturons de combat équipés.</p>
+                <span class="price-tag">Dès 18.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Gilet/Ceinturon', 18)" class="btn">Ajouter au panier</button>
+            </div>
+
+            <div class="card">
+                <div class="category-badge">Full Pack</div>
+                <h3>Tenue de Combat Complète</h3>
+                <p>Ensemble complet (Tête, Haut, Bas, Gilet) avec camouflage unifié.</p>
+                <span class="price-tag">45.00€</span>
+                <button onclick="ajouterAuPanier('Militaire: Pack Complet', 45)" class="btn" style="background: gold; color: black;">Commander le Pack</button>
             </div>
         </div>
     </div>
 
     <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
-    
+
+    <footer>
+        <p>&copy; 2026 Texture Lab Fivem - Section Tactique</p>
+    </footer>
+
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="script-firebase.js"></script>
