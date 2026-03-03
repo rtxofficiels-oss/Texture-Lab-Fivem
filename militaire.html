@@ -7,10 +7,10 @@
     <title>Militaire (Lore-Friendly) | Texture Lab Fivem</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
@@ -18,12 +18,12 @@
         <div class="menu">
             <a href="index.html">Accueil</a>
             <div class="dropdown">
-                <a href="#">Vêtements ▾</a>
+                <a href="#" class="active">Vêtements ▾</a>
                 <div class="dropdown-content">
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
-                </div>
+                    <a href="entreprise.html">Entreprise & Pro</a> </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
@@ -40,7 +40,7 @@
             <div class="card">
                 <div class="category-badge">Protection Tête</div>
                 <h3>Casques / Chapeaux</h3>
-                <p>Casques balistiques, bassets, k集中m, bérêts et casquettes de camouflage.</p>
+                <p>Casques balistiques, bassets, bérêts et casquettes de camouflage haute définition.</p>
                 <span class="price-tag">Dès 7.00€</span>
                 <button onclick="ajouterAuPanier('Militaire: Casque/Chapeau', 7)" class="btn">Ajouter au panier</button>
             </div>
@@ -71,7 +71,7 @@
 
             <div class="card">
                 <div class="category-badge">Équipement Tactique</div>
-                <h3>Gilets par balles / Ceinturons</h3>
+                <h3>Gilets par balles</h3>
                 <p>Porte-plaques lourds, gilets tactiques modulables et ceinturons de combat équipés.</p>
                 <span class="price-tag">Dès 18.00€</span>
                 <button onclick="ajouterAuPanier('Militaire: Gilet/Ceinturon', 18)" class="btn">Ajouter au panier</button>
@@ -80,9 +80,9 @@
             <div class="card">
                 <div class="category-badge">Full Pack</div>
                 <h3>Tenue de Combat Complète</h3>
-                <p>Ensemble complet (Tête, Haut, Bas, Gilet) avec camouflage unifié.</p>
+                <p>Ensemble complet (Tête, Haut, Bas, Gilet) avec camouflage unifié et badges.</p>
                 <span class="price-tag">45.00€</span>
-                <button onclick="ajouterAuPanier('Militaire: Pack Complet', 45)" class="btn" style="background: gold; color: black;">Commander le Pack</button>
+                <button onclick="ajouterAuPanier('Militaire: Pack Complet', 45)" class="btn" style="background: #d4af37; color: black;">Commander le Pack</button>
             </div>
         </div>
     </div>
