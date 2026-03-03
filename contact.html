@@ -7,6 +7,12 @@
     <title>Contact & Commande | Texture Studio</title>
 </head>
 <body>
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+    </div>
+
     <nav>
         <div class="logo">TEXTURE STUDIO</div>
         <div class="menu">
@@ -28,7 +34,7 @@
     <div class="container" style="text-align: center;">
         <div class="category-badge">Contact</div>
         <h1>Prêt à lancer votre projet ?</h1>
-        <p>Toutes les commandes passent par mon Discord pour garantir un suivi personnalisé, un devis précis et une sécurité de paiement.</p>
+        <p>Toutes les commandes passent par mon Discord pour garantir un suivi personnalisé.</p>
         
         <div class="card" style="max-width: 600px; margin: 40px auto; border-top: 4px solid var(--primary);">
             <h3 style="color: var(--primary);">Processus de commande</h3>
@@ -45,8 +51,16 @@
         <p style="font-size: 0.8rem; color: #666;">Note : Pour les packs massifs (15Go+), un délai de traitement spécifique sera appliqué.</p>
     </div>
 
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+        🛒 Valider Panier (<span id="cart-count">0</span>)
+    </div>
+
     <footer>
         <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
