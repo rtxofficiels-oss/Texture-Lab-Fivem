@@ -7,6 +7,12 @@
     <title>Boutique Custom | Vêtements & Accessoires</title>
 </head>
 <body>
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+    </div>
+
     <nav>
         <div class="logo">TEXTURE STUDIO</div>
         <div class="menu">
@@ -35,7 +41,7 @@
                 <h3>Casques & Bérets</h3>
                 <p>Insigne HD sur le front + Choix de la couleur de la texture.</p>
                 <p class="price-tag">5.00€ / unité</p>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Casque/Béret Custom', 5)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
@@ -43,7 +49,7 @@
                 <h3>T-Shirt / Polo</h3>
                 <p>Logo Coeur + Grand logo Dos + Logos Manches.</p>
                 <p class="price-tag">10.00€ / unité</p>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('T-Shirt/Polo Custom', 10)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
@@ -51,15 +57,15 @@
                 <h3>Pulls & Sweats</h3>
                 <p>Retexturage complet avec logos et marquages spécifiques.</p>
                 <p class="price-tag">12.00€ / unité</p>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Pull/Sweat Custom', 12)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Équipement</div>
                 <h3>Vestes & Gilets</h3>
-                <p>Ajout de patchs, grades, et texte "POLICE" ou "SÉCURITÉ" custom.</p>
+                <p>Ajout de patchs, grades, et texte custom.</p>
                 <p class="price-tag">15.00€ / unité</p>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Veste/Gilet Custom', 15)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
@@ -67,13 +73,21 @@
                 <h3>Pantalons / Bas</h3>
                 <p>Changement de couleur ou motif de camouflage spécifique.</p>
                 <p class="price-tag">8.00€ / unité</p>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Pantalon Custom', 8)" class="btn">Ajouter au panier</button>
             </div>
         </div>
+    </div>
+
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+        🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
     <footer>
         <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
