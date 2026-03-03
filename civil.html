@@ -7,6 +7,12 @@
     <title>Civil & RP Basique | Texture Lab Fivem</title>
 </head>
 <body>
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+    </div>
+
     <nav>
         <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
@@ -34,31 +40,37 @@
             <div class="card">
                 <div class="category-badge">Conformité</div>
                 <h3>Marques Lore-Friendly</h3>
-                <p>Remplacement des marques réelles par les marques de l'univers GTA (Binco, Suburban, ProLaps) pour vos vêtements civils.</p>
+                <p>Remplacement des marques réelles par les marques de l'univers GTA.</p>
                 <span class="price-tag">8.00€ / tenue</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Marques Lore-Friendly Civil', 8)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Custom</div>
                 <h3>Logos Gangs / Orga</h3>
-                <p>Création de bandanas, t-shirts de crew et vestes avec les logos de votre organisation criminelle ou légale.</p>
+                <p>Création de bandanas, t-shirts de crew et vestes avec vos logos.</p>
                 <span class="price-tag">Dès 10.00€</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Logos Gang/Orga', 10)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Entreprises</div>
                 <h3>Tenues de Travail</h3>
-                <p>Uniformes personnalisés pour vos mécanos, barmans, ou services de livraison (fichiers .ytd).</p>
+                <p>Uniformes personnalisés pour vos mécanos, barmans ou livreurs.</p>
                 <span class="price-tag">Dès 12.00€</span>
-                <a href="contact.html" class="btn">Commander</a>
+                <button onclick="ajouterAuPanier('Tenues Travail Custom', 12)" class="btn">Ajouter au panier</button>
             </div>
         </div>
     </div>
 
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">🛒 Panier (<span id="cart-count">0</span>)</div>
+
     <footer>
         <p>&copy; 2026 Texture Lab Fivem - Créativité Civile</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
