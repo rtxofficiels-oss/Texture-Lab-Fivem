@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Boutique Custom | Vêtements & Accessoires</title>
+    <title>Boutique Custom | Texture Lab Fivem</title>
 </head>
 <body>
-    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
-        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+    <div id="login-bar">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord...">
         <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
-        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+        <span id="user-welcome" style="display:none;"></span>
     </div>
 
     <nav>
-        <div class="logo">TEXTURE STUDIO</div>
+        <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
             <a href="index.html">Accueil</a>
             <div class="dropdown">
@@ -23,7 +23,7 @@
                     <a href="militaire.html">Militaire (Lore-Friendly)</a>
                     <a href="secours.html">Services de Secours</a>
                     <a href="civil.html">Civil & RP Basique</a>
-                </div>
+                    <a href="entreprise.html">Entreprise & Pro</a> </div>
             </div>
             <a href="vehicules.html">Véhicules</a>
             <a href="portfolio.html">Portfolio</a>
@@ -32,58 +32,59 @@
     </nav>
 
     <div class="container">
+        <div class="category-badge">Sur-Mesure</div>
         <h1>Personnalisation de Vêtements</h1>
-        <p style="text-align: center; color: #a0a0a0;">Ajout de vos logos, insignes et grades personnalisés (fichiers .ytd)</p>
+        <p style="text-align: center; color: var(--text-muted);">Ajout de vos logos, insignes et grades personnalisés (fichiers .ytd optimisés).</p>
         
         <div class="grid">
             <div class="card">
                 <div class="category-badge">Accessoires</div>
                 <h3>Casques & Bérets</h3>
                 <p>Insigne HD sur le front + Choix de la couleur de la texture.</p>
-                <p class="price-tag">5.00€ / unité</p>
-                <button onclick="ajouterAuPanier('Casque/Béret Custom', 5)" class="btn">Ajouter au panier</button>
+                <span class="price-tag">5.00€ / unité</span>
+                <button onclick="ajouterAuPanier('Custom: Casque/Béret', 5)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Hauts</div>
                 <h3>T-Shirt / Polo</h3>
                 <p>Logo Coeur + Grand logo Dos + Logos Manches.</p>
-                <p class="price-tag">10.00€ / unité</p>
-                <button onclick="ajouterAuPanier('T-Shirt/Polo Custom', 10)" class="btn">Ajouter au panier</button>
+                <span class="price-tag">10.00€ / unité</span>
+                <button onclick="ajouterAuPanier('Custom: T-Shirt/Polo', 10)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Hauts</div>
                 <h3>Pulls & Sweats</h3>
                 <p>Retexturage complet avec logos et marquages spécifiques.</p>
-                <p class="price-tag">12.00€ / unité</p>
-                <button onclick="ajouterAuPanier('Pull/Sweat Custom', 12)" class="btn">Ajouter au panier</button>
+                <span class="price-tag">12.00€ / unité</span>
+                <button onclick="ajouterAuPanier('Custom: Pull/Sweat', 12)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Équipement</div>
                 <h3>Vestes & Gilets</h3>
-                <p>Ajout de patchs, grades, et texte custom.</p>
-                <p class="price-tag">15.00€ / unité</p>
-                <button onclick="ajouterAuPanier('Veste/Gilet Custom', 15)" class="btn">Ajouter au panier</button>
+                <p>Ajout de patchs, grades, et texte custom sur vos gilets tactiques.</p>
+                <span class="price-tag">15.00€ / unité</span>
+                <button onclick="ajouterAuPanier('Custom: Veste/Gilet', 15)" class="btn">Ajouter au panier</button>
             </div>
 
             <div class="card">
                 <div class="category-badge">Bas</div>
                 <h3>Pantalons / Bas</h3>
                 <p>Changement de couleur ou motif de camouflage spécifique.</p>
-                <p class="price-tag">8.00€ / unité</p>
-                <button onclick="ajouterAuPanier('Pantalon Custom', 8)" class="btn">Ajouter au panier</button>
+                <span class="price-tag">8.00€ / unité</span>
+                <button onclick="ajouterAuPanier('Custom: Pantalon', 8)" class="btn">Ajouter au panier</button>
             </div>
         </div>
     </div>
 
-    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()">
         🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
     <footer>
-        <p>&copy; 2026 Texture Studio - Tous droits réservés</p>
+        <p>&copy; 2026 Texture Lab Fivem - Tous droits réservés</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
