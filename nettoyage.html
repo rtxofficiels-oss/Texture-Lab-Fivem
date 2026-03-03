@@ -7,6 +7,12 @@
     <title>Nettoyage Lore-Friendly | Texture Lab Fivem</title>
 </head>
 <body>
+    <div id="login-bar" style="background: #111; padding: 10px; text-align: center; border-bottom: 1px solid var(--primary);">
+        <input type="text" id="discord-input" placeholder="Pseudo Discord..." style="background: #000; color: white; border: 1px solid var(--primary); padding: 5px; border-radius: 4px;">
+        <button onclick="connexionDiscord()" class="btn" style="width: auto; padding: 5px 15px;">Se connecter</button>
+        <span id="user-welcome" style="display:none; color: white; font-weight: bold;"></span>
+    </div>
+
     <nav>
         <div class="logo">TEXTURE LAB FIVEM</div>
         <div class="menu">
@@ -32,27 +38,34 @@
         
         <div class="card" style="text-align: left; max-width: 650px; margin: 40px auto; border-left: 4px solid var(--primary);">
             <h3 style="color: var(--primary);">Pourquoi nettoyer vos packs ?</h3>
-            <p>De nombreux serveurs risquent des sanctions pour l'utilisation de marques réelles ou de drapeaux nationaux. Je traite vos fichiers <strong>.ytd</strong> pour garantir une immersion totale sans risques légaux.</p>
+            <p>De nombreux serveurs risquent des sanctions pour l'utilisation de marques réelles. Je traite vos fichiers <strong>.ytd</strong> pour garantir une immersion totale sans risques.</p>
             
             <ul style="list-style: none; padding-left: 0; margin: 20px 0;">
-                <li style="margin-bottom: 10px;">✅ <strong>Retrait drapeaux :</strong> USA, UK, FR, etc. (Uniformisation Lore)</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Suppression marques :</strong> Nike, Adidas, Crye Precision, etc.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Correction camouflage :</strong> Retouches propres sans traces de logos.</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Optimisation YTD :</strong> Réduction du poids sans perte de qualité.</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Retrait drapeaux :</strong> USA, UK, FR, etc.</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Suppression marques :</strong> Nike, Adidas, etc.</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Correction camouflage :</strong> Retouches propres.</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Optimisation YTD :</strong> Réduction du poids.</li>
             </ul>
 
             <div style="background: #222; padding: 20px; border-radius: 8px; text-align: center;">
                 <p style="margin: 0; font-size: 0.9rem;">Tarif indicatif pour packs massifs (EUP/Props)</p>
                 <span class="price-tag">À partir de 40.00€ / pack</span>
-                <p style="font-size: 0.75rem; color: #888;">Le prix varie selon le nombre de textures et la complexité (ex: pack 15Go).</p>
             </div>
 
-            <a href="https://discord.gg/TON_LIEN" class="btn" style="width: 100%; margin-top: 25px;">DEMANDER UN DEVIS SUR DISCORD</a>
+            <button onclick="ajouterAuPanier('Nettoyage Pack Lore-Friendly', 40)" class="btn" style="width: 100%; margin-top: 25px;">AJOUTER AU PANIER POUR DEVIS</button>
         </div>
+    </div>
+
+    <div id="cart-btn" class="cart-floater" onclick="validerCommande()" style="display:none;">
+        🛒 Panier (<span id="cart-count">0</span>)
     </div>
 
     <footer>
         <p>&copy; 2026 Texture Lab Fivem - Expertise Lore-Friendly</p>
     </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="script-firebase.js"></script>
 </body>
 </html>
