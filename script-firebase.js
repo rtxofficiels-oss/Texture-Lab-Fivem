@@ -19,12 +19,11 @@ let currentUser = localStorage.getItem("discordUser") || null;
 let panier = [];
 
 // --- LOG DE VISITE ---
-// Ajout d'une condition pour ne pas log les visites vides ou de l'admin
 if (!window.location.pathname.includes('admin.html')) {
     db.collection("visites").add({
         page: window.location.pathname,
         pseudo: currentUser || "Anonyme",
-        date: firebase.firestore.FieldValue.serverTimestamp() // Utilise l'heure serveur pour plus de précision
+        date: firebase.firestore.FieldValue.serverTimestamp()
     });
 }
 
@@ -37,7 +36,7 @@ function connexionDiscord() {
         currentUser = pseudo;
         localStorage.setItem("discordUser", currentUser);
         afficherProfil();
-        chargerPanierCloud(); // Récupère le panier sauvegardé s'il existe
+        chargerPanierCloud();
     } else {
         alert("⚠️ Veuillez entrer un pseudo valide (ex: User#0000).");
     }
@@ -75,7 +74,6 @@ function chargerPanierCloud() {
                 const data = doc.data();
                 panier = data.articles || [];
                 
-                // Mise à jour de l'affichage du badge panier
                 const cartCount = document.getElementById("cart-count");
                 const cartBtn = document.getElementById("cart-btn");
                 
@@ -90,25 +88,36 @@ function chargerPanierCloud() {
     }
 }
 
+// --- GESTION PANNEAU LATÉRAL (AJOUTÉ) ---
+function toggleCart(productName) {
+    const cart = document.getElementById('side-cart');
+    const overlay = document.getElementById('overlay');
+    const displayTitle = document.getElementById('product-display-name');
+
+    if (productName && displayTitle) {
+        displayTitle.innerText = productName;
+    }
+
+    cart.classList.toggle('active');
+    overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
+}
+
 // --- GESTION PANIER ---
 function ajouterAuPanier(nom, prix) {
     if (!currentUser) {
         alert("⚠️ Connecte-toi avec ton pseudo Discord en haut de page pour ajouter des articles !");
-        // On scrolle vers le haut pour montrer où se connecter
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
     }
 
     panier.push({ nom, prix });
     
-    // Mise à jour interface
     const cartCount = document.getElementById("cart-count");
     const cartBtn = document.getElementById("cart-btn");
     
     if (cartCount) cartCount.innerText = panier.length;
     if (cartBtn) cartBtn.style.display = "block";
     
-    // Log d'intention immédiat (pour voir ce que les gens regardent même s'ils ne valident pas)
     db.collection("intentions").add({ 
         article: nom, 
         prix: prix,
@@ -117,11 +126,17 @@ function ajouterAuPanier(nom, prix) {
     });
 
     sauvegarderPanierCloud();
+    
+    // Ouvre le panneau latéral (AJOUTÉ)
+    toggleCart(nom);
 }
 
-function validerCommande() {
+// --- FINALISATION (MODIFIÉ POUR LE PANNEAU) ---
+function finaliserCommande(type) {
     if (panier.length === 0) return;
 
+    const qty = document.getElementById('qty-input').value;
+    const promo = document.getElementById('promo-input').value;
     let recap = panier.map(i => i.nom).join(", ");
     let total = panier.reduce((sum, item) => sum + item.prix, 0);
     
@@ -129,11 +144,13 @@ function validerCommande() {
         pseudo: currentUser,
         articles: recap,
         montant_total: total,
+        quantite: qty,
+        code_promo: promo,
+        type_clic: type,
         date: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-        alert("🚀 Sélection enregistrée, " + currentUser + " ! Direction Discord pour ton ticket.");
-        // REMPLACE BIEN PAR TON LIEN DISCORD CI-DESSOUS
-        window.location.href = "https://discord.gg/TON_LIEN_ICI"; 
+        // REMPLACE PAR TON LIEN DISCORD
+        window.location.href = "https://discord.gg/S4y5s82nWw"; 
     });
 }
 
