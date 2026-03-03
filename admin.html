@@ -6,7 +6,6 @@
     <title>Panel Admin | Texture Lab Fivem</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Styles spécifiques au Panel Admin */
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -15,16 +14,12 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #333;
         }
-
         .stats-bar {
             background: #111;
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 30px;
             border: 1px solid var(--primary);
-            display: inline-block;
         }
-
         .log-item { 
             background: var(--card); 
             padding: 20px; 
@@ -32,13 +27,7 @@
             border-radius: 10px; 
             border: 1px solid #222;
             position: relative;
-            transition: 0.3s;
         }
-
-        .log-item:hover {
-            border-color: #444;
-        }
-
         .badge {
             padding: 4px 8px;
             border-radius: 4px;
@@ -48,35 +37,16 @@
             margin-bottom: 10px;
             display: inline-block;
         }
-
         .badge-success { background: #00ff0022; color: #00ff00; border: 1px solid #00ff0055; }
         .badge-pending { background: #5865F222; color: #5865F2; border: 1px solid #5865F255; }
-
         .btn-delete {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #222;
-            color: #ff4444;
-            border: 1px solid #444;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 5px 10px;
-            transition: 0.3s;
+            position: absolute; top: 15px; right: 15px;
+            background: #222; color: #ff4444; border: 1px solid #444;
+            cursor: pointer; border-radius: 5px; padding: 5px 10px;
         }
-
-        .btn-delete:hover {
-            background: #ff4444;
-            color: white;
-        }
-
         .item-list span {
-            font-size: 0.8rem;
-            background: #222;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-right: 5px;
-            border: 1px solid #333;
+            font-size: 0.8rem; background: #222; padding: 3px 8px;
+            border-radius: 4px; margin-right: 5px; border: 1px solid #333;
         }
     </style>
 </head>
@@ -93,7 +63,7 @@
         <div class="admin-header">
             <h1>Tableau de Bord</h1>
             <div id="ca-total" class="stats-bar">
-                💰 Chiffre d'Affaires : <strong>0.00€</strong>
+                💰 Chiffre d'Affaires : <strong>Chargement...</strong>
             </div>
         </div>
         
@@ -101,14 +71,14 @@
             <section>
                 <h2 style="color: var(--primary); margin-bottom: 20px;">📦 Commandes Récentes</h2>
                 <div id="commandes-list">
-                    <p style="color: var(--text-muted);">Chargement des commandes...</p>
+                    <p style="color: var(--text-muted);">Chargement...</p>
                 </div>
             </section>
 
             <section>
                 <h2 style="color: #5865F2; margin-bottom: 20px;">🛒 Paniers en cours</h2>
                 <div id="visites-list">
-                    <p style="color: var(--text-muted);">Chargement des paniers actifs...</p>
+                    <p style="color: var(--text-muted);">Chargement...</p>
                 </div>
             </section>
         </div>
@@ -118,7 +88,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDOLvy2PhthQZuBvaVPfq0TWquBuyP3gs4",
             authDomain: "texture-lab-fivem.firebaseapp.com",
@@ -131,75 +100,76 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Fonction de suppression générique
         function supprimerDoc(collection, id) {
-            if(confirm("Voulez-vous vraiment supprimer cette entrée ?")) {
+            if(confirm("Supprimer définitivement ?")) {
                 db.collection(collection).doc(id).delete()
-                .then(() => console.log("Supprimé !"))
-                .catch((error) => alert("Erreur: " + error));
+                .catch(err => alert("Erreur suppression: " + err));
             }
         }
 
-        // Ecoute des commandes validées
-        db.collection("commandes_finales").orderBy("date", "desc").limit(20).onSnapshot((snapshot) => {
+        // --- COMMANDES ---
+        db.collection("commandes_finales").orderBy("date", "desc").onSnapshot((snapshot) => {
             const container = document.getElementById("commandes-list");
             const caDisplay = document.getElementById("ca-total");
             let totalCA = 0;
             
             if (snapshot.empty) {
-                container.innerHTML = "<p>Aucune commande enregistrée.</p>";
+                container.innerHTML = "<p>Aucune commande.</p>";
+                caDisplay.innerHTML = "💰 Chiffre d'Affaires : <strong>0.00€</strong>";
                 return;
             }
 
             container.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const id = doc.id;
                 const prix = parseFloat(data.montant_total) || 0;
                 totalCA += prix;
+
+                // Sécurité affichage articles (si liste ou string)
+                let textArticles = Array.isArray(data.articles) ? data.articles.join(', ') : data.articles;
 
                 container.innerHTML += `
                     <div class="log-item">
                         <div class="badge badge-success">Validée</div>
-                        <button class="btn-delete" onclick="supprimerDoc('commandes_finales', '${id}')">Supprimer</button>
-                        <div style="margin-top:10px;">
+                        <button class="btn-delete" onclick="supprimerDoc('commandes_finales', '${doc.id}')">✖</button>
+                        <div>
                             <strong>Client :</strong> ${data.pseudo || "Anonyme"}<br>
-                            <strong>Articles :</strong> ${data.articles}<br>
-                            <span style="color:var(--primary); font-weight:bold; font-size:1.1rem;">Total : ${prix}€</span><br>
+                            <strong>Articles :</strong> ${textArticles || "N/A"}<br>
+                            <span style="color:var(--primary); font-weight:bold;">Total : ${prix.toFixed(2)}€</span><br>
                             <small style="color:#666;">📅 ${data.date ? data.date.toDate().toLocaleString() : 'Date inconnue'}</small>
                         </div>
                     </div>`;
             });
             caDisplay.innerHTML = `💰 Chiffre d'Affaires : <strong>${totalCA.toFixed(2)}€</strong>`;
+        }, err => {
+            console.error(err);
+            document.getElementById("commandes-list").innerHTML = "<p style='color:red;'>Erreur d'index Firestore (voir Console F12)</p>";
         });
 
-        // Ecoute des paniers actifs
-        db.collection("paniers_actifs").orderBy("derniere_maj", "desc").limit(10).onSnapshot((snapshot) => {
+        // --- PANIERS ---
+        db.collection("paniers_actifs").orderBy("derniere_maj", "desc").onSnapshot((snapshot) => {
             const container = document.getElementById("visites-list");
-            
             if (snapshot.empty) {
-                container.innerHTML = "<p>Aucun panier actif pour le moment.</p>";
+                container.innerHTML = "<p>Aucun panier actif.</p>";
                 return;
             }
-
             container.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const id = doc.id;
-                const articlesHtml = data.articles ? data.articles.map(a => `<span>${a.nom}</span>`).join('') : 'Panier vide';
+                const articlesHtml = data.articles ? data.articles.map(a => `<span>${a.nom}</span>`).join('') : 'Vide';
 
                 container.innerHTML += `
                     <div class="log-item">
                         <div class="badge badge-pending">Panier Actif</div>
-                        <button class="btn-delete" onclick="supprimerDoc('paniers_actifs', '${id}')">Supprimer</button>
-                        <div style="margin-top:10px;">
+                        <button class="btn-delete" onclick="supprimerDoc('paniers_actifs', '${doc.id}')">✖</button>
+                        <div>
                             <strong>Utilisateur :</strong> ${data.pseudo || "Anonyme"}<br>
                             <div class="item-list" style="margin: 10px 0;">${articlesHtml}</div>
-                            <small style="color:#666;">🕒 Actif le : ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
+                            <small style="color:#666;">🕒 ${data.derniere_maj ? data.derniere_maj.toDate().toLocaleString() : 'En cours...'}</small>
                         </div>
                     </div>`;
             });
-        });
+        }, err => console.error(err));
     </script>
 </body>
 </html>
