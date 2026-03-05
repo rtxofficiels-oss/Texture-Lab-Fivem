@@ -86,12 +86,35 @@ function toggleCart(productName) {
     const cart = document.getElementById('side-cart');
     const overlay = document.getElementById('overlay');
     
+    if (!cart) return; // Sécurité si l'élément n'existe pas sur la page
+
     if (productName) {
-        document.getElementById('product-display-name').innerText = productName;
+        const displayName = document.getElementById('product-display-name');
+        if (displayName) displayName.innerText = productName;
     }
 
     cart.classList.toggle('active');
-    overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
+    if (overlay) {
+        overlay.style.display = cart.classList.contains('active') ? 'block' : 'none';
+    }
+}
+
+// --- NOUVELLE FONCTION : VALIDATION / OUVERTURE PANIER ---
+// Cette fonction répare l'erreur "validerCommande is not defined"
+function validerCommande() {
+    if (panier.length === 0) {
+        alert("Votre panier est vide !");
+        return;
+    }
+    
+    // On ouvre le panneau latéral pour que l'utilisateur voit son récapitulatif
+    const cart = document.getElementById('side-cart');
+    if (cart) {
+        toggleCart(panier[panier.length - 1].nom);
+    } else {
+        // Si pas de panneau latéral sur cette page, on finalise directement
+        finaliserCommande('direct');
+    }
 }
 
 // --- GESTION PANIER (AJOUT / RETRAIT) ---
@@ -133,15 +156,14 @@ function ajouterAuPanier(nom, prix) {
     toggleCart(nom);
 }
 
-// NOUVELLE FONCTION : RETIRER LE DERNIER ARTICLE
 function retirerDuPanier() {
     if (panier.length > 0) {
-        panier.pop(); // Retire le dernier élément ajouté
+        panier.pop(); 
         actualiserAffichagePanier();
         sauvegarderPanierCloud();
         
         if (panier.length === 0) {
-            toggleCart(); // Ferme le panier s'il est vide
+            toggleCart(); 
         }
     }
 }
@@ -153,8 +175,13 @@ function finaliserCommande(type) {
         return;
     }
 
-    const qty = document.getElementById('qty-input').value;
-    const promo = document.getElementById('promo-input').value;
+    // Récupération sécurisée des inputs (évite les erreurs si absents)
+    const qtyInput = document.getElementById('qty-input');
+    const promoInput = document.getElementById('promo-input');
+    
+    const qty = qtyInput ? qtyInput.value : 1;
+    const promo = promoInput ? promoInput.value : "";
+    
     let recap = panier.map(i => i.nom).join(", ");
     let total = panier.reduce((sum, item) => sum + item.prix, 0);
     
@@ -167,7 +194,11 @@ function finaliserCommande(type) {
         type_clic: type,
         date: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
+        alert("Commande enregistrée ! Redirection vers le Discord...");
         window.location.href = "https://discord.gg/S4y5s82nWw"; 
+    }).catch((error) => {
+        console.error("Erreur lors de la commande:", error);
+        alert("Une erreur est survenue lors de l'envoi.");
     });
 }
 
@@ -175,4 +206,5 @@ function finaliserCommande(type) {
 window.addEventListener('DOMContentLoaded', () => {
     afficherProfil();
     chargerPanierCloud();
+    actualiserAffichagePanier();
 });
